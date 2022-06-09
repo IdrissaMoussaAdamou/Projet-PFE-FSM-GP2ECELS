@@ -1,0 +1,164 @@
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> *@
+    <title>FSM - GP2ECE : @ViewData["Title"]</title>
+
+    <environment include="Development">
+        <!-- Bootstrap Core CSS -->
+        <link href="~/template/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- MetisMenu CSS -->
+        <link href="~/template/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="~/template/dist/css/sb-admin-2.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="~/template/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        @*<link href="~/template/vendor/font-awesome/css/all.css" rel="stylesheet" type="text/css">*@
+        <link rel="stylesheet" href="~/css/site.css" />
+        @RenderSection("Styles", required: false)
+        @*@if (IsSectionDefined("Styles"))
+        {
+            RenderSection("Styles");
+        }*@
+    </environment>
+    <environment exclude="Development">
+        @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />*@
+    </environment>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/template/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="~/template/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="~/template/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="~/template/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    @*<link href="~/template/vendor/font-awesome/css/all.css" rel="stylesheet" type="text/css">*@
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top new-nav-color" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand new-icon-color" asp-controller="Home" asp-action="Index" > @ViewData["AppName"]</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                 <li class="dropdown">
+                    <a class="dropdown-toggle new-icon-color" data-toggle="dropdown" href="#" >
+                        <span>@User.FindFirst(ClaimTypes.Name)?.Value </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a asp-controller="Home" asp-action="Settings"><i class="fa fa-gear fa-fw"></i> Profil</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a asp-controller="Auth" asp-action="LogOut"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                   </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle new-icon-color" data-toggle="dropdown" href="#" >
+                        <i class=" fa fa-bars fa-fw"></i> 
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a asp-controller="Filiere" asp-action="Index">Filières</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="PlanEtude"> Plan D'Etude</a>
+                        </li>
+                        <li>
+                            <a asp-controller="AnneeUniversitaire" asp-action="Index"> Années Universitaires</a>
+                        </li>
+                        
+                        <li>
+                            <a asp-controller="Home" asp-action="Parametre"> Paramètres</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Enseignant" asp-action="Index"> Enseignants</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+            </ul>
+        </nav>
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <main role="main" id="renderBody">
+                        @RenderBody()
+                    </main> 
+                </div>
+            </div>       
+        </div>
+        <!-- /#wrapper -->
+    </div>
+    <footer class=" footer text-muted text-center new-nav-color new-icon-color" >
+        <div class="container">
+            &copy; 2020 FSM - GP2ECE
+        </div>
+    </footer>  
+
+    <environment include="Development">
+        @* jQuery  *@
+        <script src="~/template/vendor/jquery/jquery.min.js"></script>
+
+        @* Bootstrap Core JavaScript  *@
+        <script src="~/template/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        @* Metis Menu Plugin JavaScript  *@
+        <script src="~/template/vendor/metisMenu/metisMenu.min.js"></script>
+
+        @* Custom Theme JavaScript  *@
+        <script src="~/template/dist/js/sb-admin-2.js"></script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,115 @@
+    @model List<Enseignant>
+    @{
+    ViewData["Title"] = "List Des Ensignants";
+    ViewData["AppName"] = "FSM - GDE";
+    }
+    @section Styles{
+
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Liste Des Enseingnants</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditTeacher(-1)">
+                <i class="fa fa-plus fa-x"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="teacher-datable" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nom & Prénom</th>
+                                <th>Grade</th>
+                                <th>Statut</th>
+                                <th>Email</th>
+                                <th>Département</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-table-body">
+                            @foreach (var TeacherItem in @Model)
+                            {
+                                <tr class="row-color" id="row_@TeacherItem.Id">
+                                    <td>@TeacherItem.Nom @TeacherItem.Prenom</td>
+                                    <td>@TeacherItem.Grade</td>
+                                    <td>@TeacherItem.Statut</td>
+                                    <td>@TeacherItem.Email1</td>
+                                    <td>@TeacherItem.IntituleFrDepartement</td>
+                                    <td class="text-right">
+                                        <a href="#" onclick="ShowTeacher(@TeacherItem.Id)">
+                                            <i class="fa fa-eye b-icon fa-2x "  title="Consulter"></i>
+                                        </a>
+                                        <a href="#" onclick="CreateEditTeacher(@TeacherItem.Id)">
+                                            <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+                                        </a>
+                                        <a href="#" onclick="ConfirmDeleteTeacher(@TeacherItem.Id)">
+                                            <i class="fa fa-trash-o b-icon fa-2x"  title="Supprimer"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- create Enseignant -->
+    <!-- Modal -->
+    <div class="modal fade bd-exemple-modal-lg" id="teacher-create" tabindex="-1" role="dialog" aria-labelledby="create-teacher" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-primary" id="create-teacher">Ajouter Un Enseignant</h4>
+                </div>
+                <div class="modal-body" id="teacher-modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends --> 
+
+    <!-- delete departement -->
+    <partial name="~/Views/Enseignant/Delete.cshtml">
+    <!-- Ends -->
+
+    <!--Show Module -->
+    <div class="modal fade" id="show-teacher" tabindex="-1" role="dialog"
+        aria-labelledby="show" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                    <h4 class="modal-title text-primary" id="show">
+                        Informations De L'Enseignant
+                    </h4>
+                </div>
+                <div class="modal-body" id="teacher-info">
+
+                </div>
+            </div>
+        </div>
+    </div>
+   <partial name="~/Views/Shared/_Information.cshtml">
+    <!--End -->
+    @section Scripts{
+    <!-- DataTables JavaScript -->
+    <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+    <script src="~/js/enseignant.js"></script>
+}

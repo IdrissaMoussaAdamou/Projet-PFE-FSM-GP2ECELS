@@ -1,0 +1,198 @@
+<!-- Mode Accordion-->
+<div class="row">
+    <div class="col-lg-12" id="ch-mode">
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default no-border-raduis">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a class="col-md-12 accordion-link" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseOne">Charge Totale</a>
+                        </div>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-md-4" style="padding-left: 0px;">
+                                        <h4 class="title">Charge Totale sur l'année</h4>
+                                    </div>
+                                    <div class="col-md-3 col-lg-offset-5 text-right" style="padding-right: 0px;">
+                                        <h4 class="title">Etat : <span id="etat-charge" class="text-danger"></span></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table info-table table-striped table-bordered"
+                                        style="width:100%; margin-bottom:0px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Période</th>
+                                                <th>Cours</th>
+                                                <th>TD</th>
+                                                <th>TP</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="charge-calculee">
+                                            <tr class="row-color">
+                                                <td>Semestre 1</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="row-color">
+                                                <td>Semestre 2</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="row-color">
+                                                <td>année</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="row-color">
+                                                <td>Heure D'Enseignement Supplémentaire</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="col-lg-12 text-right" style="padding-right: 0px;">
+                                        <button class="btn b-button btn-sm btn-bottom">
+                                            <i class="fa fa-print fa-x"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default no-border-raduis">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a class="col-md-12 accordion-link" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseTwo">Enseignement</a>
+                        </div>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn b-button btn-sm btn-bottom"
+                                        onclick="CreateEditChargeEParModule(-1)">
+                                        <i class="fa fa-plus fa-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table info-table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Module</th>
+                                                <th>Niveau</th>
+                                                <th>Période</th>
+                                                <th>UVolume</th>
+                                                <th>TypeE</th>
+                                                <th>NbGroupe</th>
+                                                <th>VolumeG </th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="enseignement-tab-tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default no-border-raduis">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a class="col-md-12 accordion-link" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseThree">Encadrement</a>
+                        </div>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn b-button btn-sm btn-bottom" onclick="createEditEncadrement(-1)">
+                                        <i class="fa fa-plus fa-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 tab-scroll">
+                                    <table class="table info-table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Libellé</th>
+                                                <th>Cycle</th>
+                                                <th>Nature Charge</th>
+                                                <th>Volume</th>
+                                                <th>Période</th>
+                                                <th>NombreE</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="encadrement-tab-tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default no-border-raduis">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <a class="col-md-12 accordion-link" data-toggle="collapse" data-parent="#accordion"
+                                href="#collapseFour">Charge Divers</a>
+                        </div>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn b-button btn-sm btn-bottom" onclick="createEditChargeDiverse(-1)">
+                                        <i class="fa fa-plus fa-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table info-table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Libellé</th>
+                                                <th>NCharge</th>
+                                                <th>UVolume</th>
+                                                <th>Volume</th>
+                                                <th>Période</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="charge-divers-tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mode Accordion-->

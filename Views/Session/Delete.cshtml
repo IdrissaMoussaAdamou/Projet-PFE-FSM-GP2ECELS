@@ -1,0 +1,25 @@
+﻿<input type="hidden" id="Sessioncode">
+<div class="modal fade" id="delete-Session" tabindex="-1" role="dialog" aria-labelledby="Session-delete"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-center g-text" id="Session-delete">Suppression Permanante</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert" role="alert" style="padding-bottom: 0px;">
+                    <h4 class="alert-heading">Attention!</h4>
+                    <span>Cette Action est irréversible</span>
+                </div>
+                <div class="modal-footer btn-full-right">
+                    <button type="button" class="btn cancel btn-sm" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="DeleteSession()">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Home Page";
+    ViewData["AppName"] = "FSM - GPE";
+}
+
+<div class="menu_widgets">
+    <div class="row ">
+        <div class="col-lg-3 col-md-6 col-lg-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-sitemap fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-center">
+                            <h3>Filières</h3>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Filiere" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-calendar-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-center">
+                            <h3>Plan D'Etude</h3>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Home" asp-action="PlanEtude">
+                    <div class="panel-footer">
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-lg-3 col-md-6 col-lg-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading ajust-annee ">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-calendar fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-center">
+                           <h3>Années Universitaires</h3>
+                        </div>
+                    </div>
+                </div>
+                <a  asp-controller="AnneeUniversitaire" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-gear fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-center">
+                            <h3>Paramètres</h3>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Home" asp-action="Parametre">
+                    <div class="panel-footer">
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</div>

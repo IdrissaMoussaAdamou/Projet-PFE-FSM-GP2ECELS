@@ -1,0 +1,68 @@
+@model Projet_PFE.Models.TypePeriode
+
+<form id="create-periode-form">
+    <input name="pCode" type="hidden" value="@Model.Code">
+    <div class="form-group">
+        <label for="formGroupExampleInput">
+            Code
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="Code" placeholder="Code ...">
+        <span class="text-danger" asp-validation-for="Code"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="">
+            Intitulé Français
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="IntituleFr">
+        <span class="text-danger" asp-validation-for="IntituleFr"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="">
+            Intitulé Arabe
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="IntituleAr">
+        <span class="text-danger" asp-validation-for="IntituleAr"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="">
+            Abréviation
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="IntituleAbrg">
+        <span  class="text-danger" asp-validation-for="IntituleAbrg"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="">
+            Type
+            <span class="required-field">*</span>
+        </label>
+        <select asp-for="Type" class="form-control">
+            <option value="Semestre" selected>Semestre</option>
+            <option value="Trimestre">Trimestre</option>
+            <option value="Quater">Quater</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="">
+            Durée
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="Duree">
+        <span  class="text-danger" asp-validation-for="Duree"></span>
+    </div>
+
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type ="button" class="btn b-button" id="submit">
+            @if(string.IsNullOrEmpty(@Model.Code)){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+        </button>
+    </div>
+</form>

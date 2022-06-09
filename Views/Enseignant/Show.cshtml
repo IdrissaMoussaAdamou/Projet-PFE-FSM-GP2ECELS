@@ -1,0 +1,93 @@
+@model Enseignant
+
+<div id="edit-basic" class="tab-pane">
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Nom & Prénom</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Nom @Model.Prenom</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">CIN</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.CIN</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Grade</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Grade</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Statut</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Statut</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Situation Administrative</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.SituationAdministrative</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Département</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.IntituleFrDepartement</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Email Principal</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Email1</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Email Secondaire</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Email2</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Téléphone 1</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Telephone1</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Telephone 2 </div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Telephone2</span>
+            </div>
+        </div>
+    </div>
+</div>

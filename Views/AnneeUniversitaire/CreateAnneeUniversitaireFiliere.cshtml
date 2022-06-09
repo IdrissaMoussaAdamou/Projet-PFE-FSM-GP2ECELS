@@ -1,0 +1,39 @@
+@model List<Filiere>
+@{
+    var ListDiplome = ViewBag.ListDiplome;
+}
+
+<form class="form-horizontal search-form1 search-form2">
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="form-group row">
+
+                <label for="" class="col-md-1 control-label">Diplôme</label>
+                <div class="col-md-5">
+                    <select class="form-control" id="CodeTypeD">
+                        @foreach (var TypeDItem in @ListDiplome)
+                        {
+                            <option value="@TypeDItem.Code">@TypeDItem.IntituleFr</option>
+                        }
+                    </select>
+                </div>
+
+                <label for="" class="col-md-1 control-label">Filière</label>
+                <div class="col-md-5">
+                    <select class="form-control" id="FiliereId">
+                        @foreach (var FiliereItem in @Model)
+                        {
+                            <option value="@FiliereItem.Id">@FiliereItem.IntituleFr</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+				<div class="col-md-2 col-lg-offset-10">
+					<button type="button" class="btn b-button btn-sm btn-block" id="add-annee-filiere">Ajouter</button>
+				</div>
+			</div>
+        </div>
+    </div>
+</form>

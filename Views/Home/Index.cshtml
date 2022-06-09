@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewData["Title"] = "Home ";
+    ViewData["AppName"] = "FSM - GP2ECE";
+}
+<div class="menu_widgets">
+
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-calendar-o fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-center">
+                            @*<h3>Plan D'Etudes</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x fa-pull-right" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Home" asp-action="IndexPlanEtude">
+                    <div class="panel-footer">
+                        <span class="pull-left">Plan D'Etudes</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <a href="#">
+                             <img src="~/images/teacher.png" alt="Enseignant">
+                            </a>
+                            @*<i class="fas fa-chalkboard-teacher fa-5x" style="font-size: 7em;"></i>*@
+                        </div>
+                        <div class="col-xs-9 text-center">
+                            @*<h3>Enseignants</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x fa-pull-right" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Enseignant" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-left">Enseignants</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <div class="col-xs-3">
+                            <i class="fa fa-bar-chart-o fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<h3>Charges D'Enseignement</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="ChargeEnseignement" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-left">Charges D'Enseignement</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+       
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <div class="col-xs-3">
+                            <i class="fa fa-home fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<h3>Charges D'Enseignement</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Home" asp-action="IndexLocaux">
+                    <div class="panel-footer">
+                        <span class="pull-left">Gestion des Locaux</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <div class="col-xs-3">
+                            <i class="fa  fa-hourglass-half fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<h3>Charges D'Enseignement</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Session" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-left">Gestion des Sessions Examen</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

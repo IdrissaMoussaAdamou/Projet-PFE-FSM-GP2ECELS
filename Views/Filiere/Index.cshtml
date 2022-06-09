@@ -1,0 +1,101 @@
+@model List<Filiere>
+@{
+    ViewData["Title"] = "Filiere";
+    ViewData["AppName"] = "FSM - GPE";
+}
+@section Styles{
+   
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-resize">Listes Des Filières</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 text-right">
+		@* <button class="btn b-button btn-sm btn-bottom" data-toggle="modal" data-target="#create-filiere">
+			<i class="fa fa-plus fa-x"></i>
+		</button> *@
+        <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditFiliere(-1)">
+			<i class="fa fa-plus fa-x"></i>
+		</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="filiere-table" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Intitule Français</th>
+                            <th>Abréviation</th>
+                            <th>Département</th>
+                            <th>Type Dipôme</th>
+                            <th class="actions-width-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filiere-table-body">
+                        @foreach (var Flre in @Model)
+                        {
+                            <tr class="row-color" id="row_@Flre.Id">
+                                <td>@Flre.Code</td>
+                                <td>@Flre.IntituleFr</td>
+                                <td>@Flre.IntituleAbrg</td>
+                                <td>@Flre.IntituleFrDepartement</td>
+                                <td>@Flre.IntituleFrTypeDiplome</td>
+                                <td class="text-right">
+                                    <a asp-controller="Filiere" asp-action="Show" asp-route-Id="@Flre.Id">
+                                        <i class="fa fa-eye b-icon fa-2x "  title="Consulter"></i>
+                                    </a>
+                                    <a href="#" onclick="ConfirmFiliereDelete(@Flre.Id)">
+                                        <i class="fa fa-trash-o b-icon fa-2x"  title="supprimer"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Create Filière -->
+@* <partial name="~/Views/Filiere/Create.cshtml", model="@Model">  *@
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="create-filiere" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="myModalLabel">
+                    Ajouter Une Filière
+                </h4>
+            </div>
+            <div class="modal-body" id="filiere-body">
+
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+<!-- Delete Filiere -->
+<partial name="~/Views/Shared/_Delete.cshtml">
+<!--End -->
+<!-- info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+@section Scripts{
+    <!-- DataTables JavaScript -->
+    <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script> 
+    <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+    @* custom datatable properties  *@
+    <script src="~/js/filiereTable.js"></script>
+}
+

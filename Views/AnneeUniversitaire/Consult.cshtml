@@ -1,0 +1,168 @@
+@model SearchModelView
+@{
+    ViewData["Title"] = "Nouvelle Anne Universitaire";
+	var Annee = ViewBag.Annee;
+	ViewData["AppName"] = "FSM - GPE";
+	var ListDiplome = ViewBag.ListDiplome;
+}
+@section Styles{
+   
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+	<link rel="stylesheet" href="~/css/anneeUniversitaire.css">
+
+}
+<!-- header -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-resize annee-header"><strong>Année Universitaire: @Annee.Code</strong></h3>
+        <h3 class="navigation-link">
+            <a id="link2" asp-controller="AnneeUniversitaire" asp-action="AnneeUniversitaireFilieres" asp-route-Code="@Annee.Code">Filiéres |</a> 
+            <a id="link1" href="#"> Plan Etudes</a>
+        </h3>
+    </div>
+</div>
+<!-- End -->
+
+<!-- Search Bar -->
+<div class="row">
+	<div class="col-lg-12 resize-col-lg-12">
+		<form class="form-horizontal search-form1 search-form2" style="margin-top: 25px;" method="POST">
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<label for="" class="col-md-1 control-label">Diplôme</label>
+						<div class="col-md-5">
+							<select class="form-control" id="codeDiplome">
+								@foreach (var DiplomeItem in @ListDiplome)
+								{
+									<option value="@DiplomeItem.Code">@DiplomeItem.IntituleFr</option>
+								}
+							</select>
+						</div>
+
+						<label for="" class="col-md-1 control-label">Filière</label>
+						<div class="col-md-5">
+							<select class="form-control" id="codeFiliere">
+								@foreach (var FiliereItem in @Model.ListFilieres)
+								{
+									<option value="@FiliereItem.Id">@FiliereItem.IntituleFr</option>
+								}
+							</select>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-12 form-row">
+					<div class="form-group row">
+						<label for="" class="col-md-1 control-label">Parcours</label>
+						<div class="col-md-5">
+							<select class="form-control" id=codeParcours>
+								@foreach (var ParcoursItem in @Model.ListParcours)
+								{
+									<option value="@ParcoursItem.Id">@ParcoursItem.IntituleFr</option>
+								}
+							</select>
+						</div>
+
+						<label for="" class="col-md-1 control-label">Niveau</label>
+						<div class="col-md-2">
+							<select class="form-control" id="codeNiveau">
+								@foreach (var NiveauItem in @Model.ListNiveaux)
+								{
+									<option value="@NiveauItem.Id">@NiveauItem.IntituleAbrg</option>
+								}
+							</select>
+						</div>
+
+						<label for="" class="col-md-1 control-label">Période</label>
+						<div class="col-md-2">
+							<select class="form-control" id="codePeriode">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-md-2 col-lg-offset-10 form-row">
+					<button type="button" class="btn b-button btn-sm btn-block" id="search">Chercher</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<input type="hidden" id="code-year" value="@Annee.Code">
+</div>
+<!-- End -->
+
+<!-- body Content -->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-12" style="margin-top: 20px;">
+			<div class="panel panel-default">
+				<div class="col-lg-12 text-right" style="display:none" id="option-container">
+					<button class=" btn b-button btn-sm" style="margin-right: 10px;" title="Exporter pdf" id="export-pdf">
+    					<i class="fa fa-download fa-x"></i>
+    				</button>
+					<button class="btn b-button btn-sm btn-bottom archive-btn" id="btn-option">
+						<i class="fa fa-plus fa-x"></i>
+					</button>
+				</div>
+				<div class="panel-body">
+					<table class="plan-etude-table" style="width:100%" id="plan-table">
+						<thead id="plan-header">
+							
+						</thead>
+
+						<tbody id="plan-body">
+
+						</tbody>
+
+						<tfoot id="plan-footer">
+
+						</tfoot>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End -->
+<input type="hidden" id="CodeAnneeUniv" value="@Annee.Code">
+
+<!-- Create NomOption -->
+
+<div class="modal fade bd-example-modal-lg" id="nom-option" tabindex="-1" role="dialog"
+    aria-labelledby="create-niveau-parcours" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title text-primary" id="create-departement">Les Modules Optionnels</h4>
+            </div>
+			<div class="modal-body" id="nom-option-body">
+					
+			</div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+
+
+@section Scripts{
+	<script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script><script src="~/js/jspdf.debug.js"></script>
+    <script src="~/js/jspdf.plugin.autotable.min.js"></script>
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">	
+	<script src="~/js/anneeUniversitaire.js"></script>
+}

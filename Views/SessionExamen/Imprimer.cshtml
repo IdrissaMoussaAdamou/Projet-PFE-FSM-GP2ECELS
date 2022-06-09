@@ -1,0 +1,98 @@
+﻿@model SessionJourVM
+@{
+    ViewData["ids"] = ViewBag.ids;
+    var listsection = ViewBag.listsection;
+    ViewData["Title"] = "CalendrierImprimable";
+    ViewData["AppName"] = "FSM - GDS";
+    //layout = "~/views/shared/_layout3.cshtml";
+}
+@section Styles{
+
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+    <link rel="stylesheet" href="~/css/chargeEnseignement.css">
+}
+
+<div id="CalendrierImprim">
+    <div class="row row-container container-margin2">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header page-header-resize">Calendriers selon Niveau</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="Calendrier" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr class="Calenth">
+                                <th></th>
+                                @foreach (var @JourItem in @Model.Jours)
+                                {
+
+                                    <th colspan="2" style="text-align:center">@JourItem</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="Calendrier-table-body">
+                            @foreach (var @sectionitem in @Model.Cells)
+                            {
+                                <tr>
+                                    <th class="Calenth" style="vertical-align:middle">@sectionitem[0].SectionNiveau</th>
+                                    @foreach (var @CellItem in @sectionitem)
+                                    {
+                                        if (@CellItem.Id <= 0)
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId ****1" class="Calentd">
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId" class="Calentd">
+                                                <div>
+                                                    <p>
+                                                        @CellItem.Intitule
+                                                    </p>
+                                                    <p>
+                                                        @CellItem.HD<span>-</span>@CellItem.HF
+                                                    </p>
+                                                </div>
+                                            </td>
+
+                                        }
+
+                                        if (@CellItem.Id2 <= 0)
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId ****1" class="Calentd">
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId" class="Calentd">
+                                                <div>
+                                                    <p>
+                                                        @CellItem.Intitule2
+                                                    </p>
+                                                    <p>
+                                                        @CellItem.HD2<span>-</span>@CellItem.HF2
+                                                    </p>
+                                                </div>
+                                            </td>
+
+                                        }
+                                    }
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

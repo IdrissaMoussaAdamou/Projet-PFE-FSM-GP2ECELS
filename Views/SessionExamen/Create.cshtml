@@ -1,0 +1,53 @@
+﻿@model SessionExamen
+@{
+    var listeseance = ViewBag.listeseance;
+    var listmodule = ViewBag.listmodule;
+ }
+<form id="SessionExamen-form">
+    <input type="hidden" class="form-control" asp-for="IdSession">
+    <input type="hidden" class="form-control" asp-for="numcell">
+    <input type="hidden" class="form-control" asp-for="IdSessionJour">
+    <input type="hidden" class="form-control" asp-for="CodeFiliere">
+    <input type="hidden" class="form-control" asp-for="CodeParcours">
+    <input type="hidden" class="form-control" asp-for="Niveau">
+    <input type="hidden" class="form-control" asp-for="NbEtudiants">
+    <input type="hidden" class="form-control" asp-for="Periode">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Module
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" name="IdMod">
+                    @foreach (var Item in @listmodule)
+                    {
+                          <option value="@Item.IdModule">@Item.IntituleFr</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Séance
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" name="IdSean">
+                    @foreach (var Item in @listeseance)
+                    {
+                          <option value="@Item.Id">@Item.HeureDebut-@Item.HeureFin</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="button" class="btn b-button" id="submitExam">
+
+            <span> Enregistrer </span>
+
+        </button>
+    </div>
+</form>

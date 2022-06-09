@@ -1,0 +1,131 @@
+@model SearchModelView
+
+<div class="modal-headr">
+    <form class="form-horizontal search-form1">
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="form-group row">
+                   
+                   <label for="" class="col-md-1 control-label">Niveau</label>
+                    <div class="col-md-5">
+                        <select class="form-control" id="CodeNiveau">
+                            @foreach (var NiveauItem in @Model.ListNiveaux)
+                            {
+                                @if(@Model.NewNiveauParcours.Id != 0 && @Model.NewNiveauParcours.IdNiveau == NiveauItem.Id)
+                                {
+                                    <option value="@NiveauItem.Id" selected>@NiveauItem.IntituleAbrg</option>
+                                }
+                                else
+                                {
+                                    <option value="@NiveauItem.Id">@NiveauItem.IntituleAbrg</option>
+                                }
+                            }
+						</select>
+                    </div>
+
+                    <label for="" class="col-md-1 control-label">Parcours</label>
+                    <div class="col-md-5">
+                        <select class="form-control" id="CodeParcours">
+                            @foreach (var ParcoursItem in @Model.ListParcours)
+                            {
+                                @if(@Model.NewNiveauParcours.Id != 0 && @Model.NewNiveauParcours.IdParcours == ParcoursItem.Id)
+                                {
+                                    <option value="@ParcoursItem.Id" selected>@ParcoursItem.IntituleFr</option>
+                                }
+                                else
+                                {
+                                    <option value="@ParcoursItem.Id">@ParcoursItem.IntituleFr</option>
+                                }
+
+                            }
+						</select>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-body">
+    <form id="niveau-parcours-form">
+        <input type="hidden" asp-for="@Model.NewNiveauParcours.IdFiliere">
+        <input type="hidden" asp-for="@Model.NewNiveauParcours.Id">
+        <input type="hidden" asp-for="@Model.NewNiveauParcours.CodeAnneeUniv">
+        <input type="hidden" asp-for="@Model.NewNiveauParcours.IdNiveau">
+        <input type="hidden" asp-for="@Model.NewNiveauParcours.IdParcours">
+    
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Nombre De Section De Cours
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.NbGroupesC">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.NbGroupesC"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">
+                        Nombre De CourS Intégré
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.NbGroupesCI">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.NbGroupesCI"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Nombre De Groupe De TD
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.NbGroupesTD">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.NbGroupesCI"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">
+                        Nombre De Groupe De TP
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.NbGroupesTP">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.NbGroupesTP"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Nombre D'Etudiants
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.NbEtudiants">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.NbEtudiants"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">
+                        Période
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="@Model.NewNiveauParcours.Periode">
+                    <span class="text-danger" asp-validation-for="@Model.NewNiveauParcours.Periode"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer btn-full-right">
+            <button type="reset" class="btn b-button">Annuler</button>
+            <button type="button" class="btn b-button" id="submit-niveau-parcours">
+                @if(@Model.NewNiveauParcours.Id == 0){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+            </button>
+        </div>
+    </form>
+</div>

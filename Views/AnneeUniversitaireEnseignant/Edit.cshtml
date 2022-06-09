@@ -1,0 +1,76 @@
+@model AnneeUniversitaireEnseignant
+@{
+    var ListDepartement = ViewBag.ListDepartement;
+}
+<form id="update-teacher-form">
+    <input type="hidden" name="codeAnneeUniv" id="codeAnneeUniv">
+    <input type="hidden" asp-for="Id">
+    <input type="hidden" asp-for="CIN">
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Nom
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="Nom">
+                <span class="text-danger" asp-validation-for="Nom"></span>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="">
+                    Prenom
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="Prenom">
+                <span class="text-danger" asp-validation-for="Prenom"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">Grade</label>
+                <select class="form-control" asp-for="Grade">
+                    <Option value="PES">PES</Option>
+                    <Option value="Assistant">Assistant</Option>
+                    <Option value="Maître assistant">Maître assistant</Option>
+                    <Option value="Maître de conférence">Maître de conférence</Option>
+                    <Option value="Professeur">Professeur</Option>
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="">Statut</label>
+                <select class="form-control" asp-for="Statut">
+                    <Option value="Permanent">Permanent</Option>
+                    <Option value="Contractuel">Contractuel</Option>
+                    <Option value="Vacataire">Vacataire</Option>
+                    <Option value="Expert">Expert</Option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-16">
+                <label for="">
+                    Département
+                </label>
+                <select class="form-control" asp-for="CodeDepartement">
+                    @foreach (var DepartementItem in @ListDepartement)
+                    {
+                        <option value="@DepartementItem.Code">@DepartementItem.IntituleFr</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="button" class="btn b-button" id="submit-teacher">Modifier</button>
+    </div>
+</form>

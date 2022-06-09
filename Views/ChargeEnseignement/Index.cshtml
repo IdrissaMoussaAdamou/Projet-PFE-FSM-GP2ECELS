@@ -1,0 +1,71 @@
+@model List<AnneeUniversitaire>
+@{
+ViewData["Title"] = "Charge Année Universitaire";
+Layout = "_Layout2";
+ ViewData["Link"] = "";
+}
+@section Styles{
+   <link rel="stylesheet" href="~/css/chargeEnseignement.css"> 
+}
+<div class="text-right" style="padding-top: 3px;">
+    <h5>
+        <a asp-controller="ChargeEnseignement" asp-action="Parametres">Paramètres</a>
+        <a asp-controller="Home" asp-action="Index"> | Home</a>
+    </h5>
+</div>
+<div class="row row-container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Charges d’enseignement par année</h3>
+        </div>
+    </div>
+    @* <div class="row">
+        <div class="col-lg-12 text-right">
+            <button class="btn b-button btn-sm btn-bottom" onclick="CreateAnneeUniversitaire('')">
+                <i class="fa fa-plus fa-x"></i>
+                </a>
+            </button>
+        </div>
+    </div> *@
+    <div class="row">
+        <div class="col-lg-12" style="margin-top: 30px;">
+            <table id="charge-annee" class="table info-table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Année Universitaire</th>
+                        <th>Etat</th>
+                        <th style="width: 10%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var AnneeItem in @Model)
+                    {
+                        <tr class="row-color">
+                            <td>@AnneeItem.Code</td>
+                            <td>@AnneeItem.EtatCharges</td>
+                            <td class="text-center">
+                                <a asp-controller="ChargeEnseignement" asp-action="Consult" asp-route-Code="@AnneeItem.Code" title="Consulter">
+                                    <i class="fa fa-eye b-icon fa-2x"></i>
+                                </a>
+                                @if(@AnneeItem.EtatCharges == "En cours")
+                                {
+                                    <a asp-controller="ChargeEnseignement" asp-action="ArchiverChargeEnseignement" asp-route-Code="@AnneeItem.Code" title="Cloturée">
+                                       <i class="fa fa-archive b-icon fa-2x"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- DataTables JavaScript -->
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+        @* custom datatable properties *@
+    <script src="~/js/chargeEnseignement.js"> </script>
+}

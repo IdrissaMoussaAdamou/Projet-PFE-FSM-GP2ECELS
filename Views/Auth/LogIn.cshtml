@@ -1,0 +1,31 @@
+@model LogInModel
+@{
+    Layout = "_Login";
+    ViewData["Title"] = "Authentification";
+}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center g-text"> Connexion </h3>
+            </div>
+            <div class="panel-body">
+                <form asp-controller="Auth" asp-action="LogIn" role="form" method="POST">
+                    <fieldset>
+                       @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <input class="form-control" placeholder="E-mail" asp-for="Email" type="email" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Password" asp-for="Password" type="password">
+                        </div>
+
+                        <button type="submit" class="btn btn-sm b-button btn-block">Se Connecter</button>
+
+                        <a asp-controller="Auth" asp-action="RegisterTeacher" class="btn btn-sm b-button btn-block">Créer Un Compte Enseignant </a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

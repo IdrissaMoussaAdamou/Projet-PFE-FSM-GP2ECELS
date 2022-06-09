@@ -1,0 +1,100 @@
+﻿@model Salle
+@{ var ListBatiment = ViewBag.ListBatiment; }
+<form id="Salle-form">
+    <input type="hidden" name="OldCode" value="@Model.Code">
+    @*<input type="hidden" asp-for="Code">*@
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Code
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="Code">
+                <span class="text-danger" asp-validation-for="Code"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Etage
+                    @*<span class="required-field">*</span>*@
+                </label>
+                <input type="number" class="form-control" asp-for="Etage">
+                <span class="text-danger" asp-validation-for="Etage"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Type
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" asp-for="Type">
+                    <Option value="amphi">Amphithéatre</Option>
+                    <Option value="Bibliothèque">Bibliothèque</Option>
+                    <Option value="Local">Local</Option>
+                    <Option value="Laboratoire">Laboratoire</Option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">Capacité d'enseignement</label>
+                <input type="number" class="form-control" asp-for="CapaciteEnseignement">
+                <span class="text-danger" asp-validation-for="CapaciteEnseignement"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Batiment
+                </label>
+                <select class="form-control" asp-for="CodeBatiment">
+                    @foreach (var BatimentItem in @ListBatiment)
+                     {
+                       <option value="@BatimentItem.Code">@BatimentItem.Nom</option>
+                     }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">Capacité d'examen</label>
+                <input type="number" class="form-control" asp-for="CapaciteExamen">
+                <span class="text-danger" asp-validation-for="CapaciteExamen"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">Etat</label>
+                <select class="form-control" asp-for="Etat">
+                    <Option value="Disponible">Disponiple</Option>
+                    <Option value="Indisponible">Indisponible</Option>
+                    <Option value="En travaux">En travaux</Option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">NB de surveillants</label>
+                <input type="text" class="form-control" asp-for="NbSurveillants">
+                <span class="text-danger" asp-validation-for="NbSurveillants"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="button" class="btn b-button" id="submit">
+            @if (string.IsNullOrEmpty(@Model.Code))
+            {<span> Enregistrer </span> }
+            else
+            { <span> Modifier </span>}
+        </button>
+    </div>
+</form>

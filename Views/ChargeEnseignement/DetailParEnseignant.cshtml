@@ -1,0 +1,405 @@
+@model List<AnneeUniversitaire>
+@{
+    ViewData["Title"] = "Détail Charge";
+    ViewData["Link"] = "FSM - ENseignant";
+    Layout = "_Layout2";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/chargeEnseignement.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css"> 
+}
+<div class="row row-container container-margin">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Détails des charges d'enseignement</h3>
+        </div> 
+    </div>
+</div>
+
+<div class="row row-mt-20">
+    <div class="col-lg-12 col-p102">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 flex-container ">
+                        <div class="col-lg-4 flex-container-child s-border">
+                            <div class="row row-mt-20">
+                                <div class="col-lg-12">
+                                    <h3 class="page-header page-header-resize">Liste Des Années Universitaires</h3>
+                                </div> 
+                            </div>
+                            <table  class="table info-table table-striped table-bordered" id="TeachersTab" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Année Universitaire</th>
+                                        <th>Etat Année</th>
+                                        <th>Etat Charge</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(@Model != null && @Model.Count > 0)
+                                    {
+                                       @foreach (var AnneeUnivItem in @Model)
+                                       {
+                                            <tr class="row-color rows" id="row_@AnneeUnivItem.Code">
+                                                <td>@AnneeUnivItem.Code</td>
+                                                <td>@AnneeUnivItem.EtatPlanEtudes</td>
+                                                <td>@AnneeUnivItem.EtatCharges</td>
+                                            </tr>
+                                       }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-8 info-body-content no-border flex-container-child s-border">
+                            <div class="row row-info row-info-m30 row-mt-20">
+                                <div class="row">
+                                    <div class="col-lg-12" style="margin-bottom: 10px;">
+                                        <div class="col-md-3" style="padding-right: 0px;">
+                                            <i class="fa fa-user fa-5x" style="font-size: 8em;"></i>
+                                        </div>
+
+                                        <div class="col-md-9" style="padding-left: 0px;padding-top: 15px;">
+                                            <div class="form-group row">
+                                                <label class="col-md-3" for="">
+                                                Nom: 
+                                                <span id="TeacherFirstName"></span>
+
+                                                </label>
+                                                <label class="col-md-3" for="">
+                                                Prenom: 
+                                                <span id="TeacherLastName"></span>
+                                                </label>
+
+                                                <label class="col-md-3" for="">
+                                                CIN: 
+                                                <span id="TeacherCIN"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-md-3" for="">
+                                                Statut: 
+                                                <span id="TeacherStatut"></span>
+
+                                                </label>
+                                                <label class="col-md-4" for="" >
+                                                Grade: 
+                                                <span id="TeacherGrade"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-md-6" for="" >
+                                                Département: 
+                                                <span id="TeacherDept"></span>
+                                                </label>
+
+                                                @* <div class="col-md-4 col-lg-offset-2">
+                                                    <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier" onclick="editAnneeUniversitaireTeacher()"></i>
+                                                </div> *@
+                                            </div>
+
+                                            <input type="hidden" id="TeacherId">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-mt-20 row-ml-0">
+                                <div class="col-md-12 col-p28">
+                                    <div class="col-md-3">
+                                        <h4 class="title">Détail de la charge</h4>
+                                    </div>
+                                    <div class="col-md-5 col-lg-offset-4" >
+                                        <div class="pull-right">
+                                        <span class="middle">Affichage: &nbsp;</span>
+                                        <div class="btn-toolbar inline middle no-margin">
+                                            <div data-toggle="buttons" class="btn-group no-margin" id="choose-mode">
+                                                <label class="btn btn-sm btn-yellow active">
+                                                    <span>1</span>
+                                                    <input type="radio" name="displaymode" value="1">
+                                                </label>
+
+                                                <label class="btn btn-sm btn-yellow">
+                                                    <span>2</span>
+                                                    <input type="radio" name="displaymode" value="2">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"id="mode-container">
+                                <div class="row row-tabbable">
+                                    <div class="col-lg-12 col-p30">
+                                        <div class="row tabbable-top">
+                                            <div class="col-lg-12">
+                                                <div class="tabbable">
+                                                    <ul class="nav nav-tabs padding-16">
+                                                        <li class="active">
+                                                            <a data-toggle="tab" href="#charge-tab">
+                                                                Charge Totale
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-toggle="tab" href="#enseignement-tab">
+                                                                Enseignement
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a data-toggle="tab" href="#encadrement-tab">
+                                                                Encadrement
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a data-toggle="tab" href="#charge-divers">
+                                                                Autres Charges
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="tab-content profile-edit-tab-content " style="margin-bottom: 20px;" id="group-panels">
+                                                        <div id="charge-tab" class="tab-pane in active" style="margin-top: 35px;">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="col-md-4" style="padding-left: 0px;">
+                                                                        <h4 class="title">Charge Totale sur l'année</h4>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-lg-offset-5 text-right" style="padding-right: 0px;">
+                                                                        <h4 class="title">Etat : <span id="etat-charge" class="text-danger"></span></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table  class="table info-table table-striped table-bordered" style="width:100%; margin-bottom:0px;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Période</th>
+                                                                                <th>Cours</th>
+                                                                                <th>TD</th>
+                                                                                <th>TP</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="charge-calculee">
+                                                                            <tr class="row-color">
+                                                                                <td>Semestre 1</td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            <tr class="row-color">
+                                                                                <td>Semestre 2</td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            <tr class="row-color">
+                                                                                <td>Année</td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                            <tr class="row-color">
+                                                                                <td>Heure D'Enseignement Supplémentaire</td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <div class="col-lg-12 text-right" style="padding-right: 0px;">
+                                                                        <button class="btn b-button btn-sm btn-bottom">
+                                                                            <i class="fa fa-print fa-x"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+
+                                                                <div class="vspace-12-sm"></div>
+
+                                                                <div class="col-xs-12 col-sm-8">
+                                                                    <div class="space-4"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="enseignement-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditChargeEParModule(-1)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table  class="table info-table table-striped table-bordered" style="width:100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Module</th>
+                                                                                <th>Niveau</th>
+                                                                                <th>Période</th>
+                                                                                <th>Volume</th>
+                                                                                <th>NatureE</th>
+                                                                                <th>NbGroupe</th>
+                                                                                <th>NbSemaine</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="enseignement-tab-tbody">
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="encadrement-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="createEditEncadrement(-1)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 tab-scroll">
+                                                                    <table  class="table info-table table-striped table-bordered" style="width:100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Libellé</th>
+                                                                                <th>Cycle</th>
+                                                                                <th>Nature Charge</th>
+                                                                                <th>Volume</th>
+                                                                                <th>Période</th>
+                                                                                <th>NbEncadrement</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="encadrement-tab-tbody">
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div id="charge-divers" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="createEditChargeDiverse(-1)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table  class="table info-table table-striped table-bordered" style="width:100%">
+                                                                        <thead>
+                                                                            <tr>
+                                                                               <th>Nature Charge</th>
+                                                                                <th>Période</th>
+                                                                                <th>Volume</th>
+                                                                                <th>NbSemaine</th>
+                                                                                <th>UVolume</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="charge-divers-tbody">
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="CodeAnneeUniv">
+
+<!-- #Create AnneeUniversitaireEnseignement -->
+<div class="modal fade bd-exemple-modal-lg" id="anneeuniv-enseignement-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title text-primary" id="anneeuniv-enseignement-title">Ajouter Un Enseignement</h4>
+            </div>
+            <div class="modal-body" id="anneeuniv-enseignement-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End -->
+<partial name="~/Views/ChargeParModule/Delete.cshtml">
+<!-- #Add ChargeDiverse -->
+<div class="modal fade bd-exemple-modal-lg" id="charge-divers-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="charge-divers-title"></h4>
+            </div>
+            <div class="modal-body" id="charge-divers-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #End -->
+<!--  ChargeEncadrement -->
+<div class="modal fade" id="charge-encadrement-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title text-primary" id="charge-encadrement-title"></h4>
+            </div>
+            <div class="modal-body" id="charge-encadrement-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete -->
+<partial name="~/Views/ChargeEncadrement/Delete.cshtml">
+
+<!-- End -->
+
+<!-- Report Info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+<!--Ends --> 
+
+<!-- #Delete ChargeDiverse -->
+<partial name="~/Views/ChargeDiverse/Delete.cshtml">
+<!-- #End -->
+@section Scripts{
+    
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+        @* custom datatable properties *@
+	<script src="~/js/detailsTeacher.js"> </script>
+}

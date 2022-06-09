@@ -1,0 +1,296 @@
+@model FiliereNiveauParcoursViewModel
+@{
+ViewData["Title"] = "Détail D'une Filiere";
+ViewData["AppName"] = "FSM - GPE";
+}
+@section Styles{
+
+<link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+<link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+<link rel="stylesheet" href="~/css/showFiliere.css">
+
+}
+<div class="row">
+	<div class="col-lg-12 header-container">
+		<h3 class="page-header page-header-resize">
+			Filière : @Model.Flre.IntituleFr
+		</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#edit-basic">
+
+					Infos
+				</a>
+			</li>
+
+			<li>
+				<a data-toggle="tab" href="#edit-settings">
+
+					Niveaux
+				</a>
+			</li>
+
+			<li>
+				<a data-toggle="tab" href="#edit-password">
+
+					Parcours
+				</a>
+			</li>
+		</ul>
+
+		<div class="tab-content profile-edit-tab-content " style="margin-bottom: 20px;" id="group-panels">
+			<div id="edit-basic" class="tab-pane in active">
+				<h4 class="header blue bolder smaller text-primary">Informations Générales</h4>
+
+				<div class="profile-user-info profile-user-info-striped">
+					<div class="profile-info-row">
+						<div class="profile-info-name">Code</div>
+						<div class="profile-info-value">
+							<span class="editable">@Model.Flre.Code</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name">Intitulé Français</div>
+						<div class="profile-info-value">
+							<span class="editable">@Model.Flre.IntituleFr</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Intitulé Arabe </div>
+						<div class="profile-info-value">
+							<span class="editable" id="age">@Model.Flre.IntituleAr</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Abréviation </div>
+						<div class="profile-info-value">
+							<span class="editable" id="signup">@Model.Flre.IntituleAbrg</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Domaine </div>
+						<div class="profile-info-value">
+							<span class="editable" id="login">@Model.Flre.Domaine</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Mention </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.Mention</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Type Période </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.TypePeriode</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Nombre de Période </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.NbPeriodes</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Période D'Habilitation </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.PeriodeHabilitation</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Département </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.IntituleFrDepartement</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Type De Diplôme </div>
+						<div class="profile-info-value">
+							<span class="editable" id="about">@Model.Flre.IntituleFrTypeDiplome</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 ">
+						<div class="col-lg-12 text-right btn-up">
+							<button class="btn b-button btn-sm btn-update" data-toggle="modal" data-target="#myEditModal">
+								Modifier
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="vspace-12-sm"></div>
+
+					<div class="col-xs-12 col-sm-8">
+						<div class="space-4"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="edit-settings" class="tab-pane">
+				<div class="row">
+					<div class="col-lg-12 text-right">
+						<button class="btn b-button btn-sm" onclick="CreateEditNiveau(@Model.Flre.Id, -1)">
+							<i class="fa fa-plus fa-x"></i>
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<table id="niveau-table" class="table table-striped table-bordered" style="width:100%">
+							<thead>
+								<tr>
+									<th>Code</th>
+									<th>Intitulé Français</th>
+									<th>Intitulé Arabe</th>
+									<th>Abréviation</th>
+									<th class="actions-width-2">Actions</th>
+								</tr>
+							</thead>
+							<tbody id="niveau-table-body">
+								@foreach (var Niv in @Model.Niveaux)
+								{
+								<tr class="row-color" id="row_@Niv.Id">
+										<td>@Niv.Code</td>
+										<td>@Niv.IntituleFr</td>
+										<td>@Niv.IntituleAr</td>
+										<td>@Niv.IntituleAbrg</td>
+										<td class="text-right">
+											<a href="#" onclick="CreateEditNiveau(@Niv.IdFiliere,@Niv.Id)">
+												<i class="fa fa-edit fa-2x b-icon" ></i>
+											</a>
+											<a href="#" onclick="ConfirmDeleteNiveau(@Niv.Id)">
+												<i class="fa fa-trash-o b-icon fa-2x" ></i>
+											</a>
+										</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				@* create Niveau *@
+				<div class="modal fade" id="niveau-create" tabindex="-1" role="dialog" aria-labelledby="create-niveau"
+					aria-hidden="true" style="display: none;">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title text-primary" id="create-niveau">
+									Ajouter Un Niveaux
+								</h4>
+							</div>
+							<div class="modal-body" id="niveau-body">
+
+							</div>
+						</div>
+					</div>
+				</div>
+				@* Create Niveau *@
+				@* Delete Niveau *@
+				<partial name="~/Views/Niveau/Delete.cshtml">
+			</div>
+
+			<div id="edit-password" class="tab-pane">
+				<div class="row">
+					<div class="col-lg-12 text-right">
+						<button class="btn b-button btn-sm" onclick="CreateEditParcours(@Model.Flre.Id,-1)">
+							<i class="fa fa-plus fa-x"></i>
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<table id="parcours-table" class="table table-striped table-bordered" style="width:100%">
+							<thead>
+								<tr>
+									<th>Code</th>
+									<th>Intitule Français</th>
+									<th>Intitulé Arabe</th>
+									<th>Abréviation</th>
+									<th>Période Habilitation</th>
+									<th class="actions-width-2">Actions</th>
+								</tr>
+							</thead>
+							<tbody id="parcours-table-body">
+								@foreach (var Pars in @Model.Parcours)
+								{
+
+								<tr class="row-color" id="row-@Pars.Id">
+									<td>@Pars.Code</td>
+									<td>@Pars.IntituleFr</td>
+									<td>@Pars.IntituleAr</td>
+									<td>@Pars.IntituleAbrg</td>
+									<td>@Pars.PeriodeHabilitation</td>
+									<td class="text-right">
+										<a href="#" onclick="CreateEditParcours(@Pars.IdFiliere,@Pars.Id)">
+											<i class="fa fa-edit fa-2x" style="color: #337ab7;"></i>
+										</a>
+										<a href="#" onclick="ConfirmDeleteParcours(@Pars.Id)">
+											<i class="fa fa-trash-o b-icon fa-2x" ></i>
+										</a>
+									</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+					<!-- create Parcours -->
+					<div class="modal fade bd-exemple-modal-lg" id="parcours-create" tabindex="-1" role="dialog"
+						aria-labelledby="create-parcours" aria-hidden="true" style="display: none;">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">×</button>
+									<h4 class="modal-title text-primary" id="create-parcours">
+										Ajouter Un Parcours
+									</h4>
+								</div>
+								<div class="modal-body" id="parcours-body">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--Ends -->
+					<!-- create Parcours -->
+					<partial name="~/Views/Parcours/Delete.cshtml">
+						<!--Ends -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<partial name="~/Views/Filiere/Edit.cshtml" model="@Model">
+
+<!-- info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+
+@section Scripts{
+	<!-- DataTables JavaScript -->
+	<script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+	<script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+		@* custom datatable properties *@
+		<script src="~/js/showFiliere.js"></script>
+}

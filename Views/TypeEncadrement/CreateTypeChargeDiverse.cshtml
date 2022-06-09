@@ -1,0 +1,20 @@
+@model TypeChargeDiverse
+
+<form id="TypeChargeDiverse-Form" >
+    <input type="hidden" asp-for="Id">
+     <div class="form-group">
+        <label for="">
+            Libellé
+            <span class="required-field">*</span>
+        </label>
+        <input type="text" class="form-control" asp-for="Libelle">
+        <span class="text-danger" asp-validation-for="Libelle"></span>
+    </div>
+
+     <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type ="button" class="btn b-button" id="submit-typeChargeDiverse">
+            @if(Model.Id == 0){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+        </button> 
+    </div>
+</form>

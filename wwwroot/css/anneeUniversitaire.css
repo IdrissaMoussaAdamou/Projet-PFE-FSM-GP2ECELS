@@ -1,0 +1,23 @@
+
+h3.page-header.annee-header{
+    border:none;
+}
+
+h3.navigation-link ,a#link1,a#link1:hover{
+    text-decoration: none;
+    color:rgb(215,215,215);
+}
+
+h3.navigation-link ,a#link1,a#link1:hover{
+    text-decoration: none;
+    color:rgb(215,215,215);
+}
+
+h3.navigation-link ,a#link2,a#link2:hover{
+    text-decoration: none;
+}
+form.form-horizontal.search-form1.search-form2 
+{
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}

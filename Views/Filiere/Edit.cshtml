@@ -1,0 +1,158 @@
+@model FiliereNiveauParcoursViewModel
+@{
+    ViewData["Title"] = "Modifier une Filière";
+}
+
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="myModalLabel">
+                   Modifier une Filière
+                </h4>
+            </div>
+            <div class="modal-body">
+
+               <form asp-controller="Filiere" asp-action="StoreUpdate" method="POST">
+                     <input type="hidden" asp-for="@Model.Flre.Id">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label for="">
+                                    Département
+                                </label>
+                                <select class="form-control" asp-for="@Model.Flre.CodeDepartement">
+                                    @foreach (var Dept in @Model.Departements)
+                                    {
+                                        <option value="@Dept.Code">@Dept.IntituleFr</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="">
+                                    Type De Diplôme
+                                 </label>
+                                <select class="form-control" asp-for="@Model.Flre.CodeTypeDiplome">
+                                    @foreach (var TypeD in @Model.TypeDiplomes)
+                                    {
+                                        <option value="@TypeD.Code">@TypeD.IntituleFr</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label for="">
+                                    Code
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.Code" placeholder="Code ...">
+                                <span asp-validation-for="@Model.Flre.Code" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">
+                                    Intitulé Français
+                                    <span class="required-field">*</span>
+                                </label>
+                                    <input type="text" class="form-control" asp-for="@Model.Flre.IntituleFr">
+                                    <span asp-validation-for="@Model.Flre.IntituleFr" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label for="">
+                                    Intitulé Arabe
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.IntituleAr">
+                                <span asp-validation-for="@Model.Flre.IntituleAr" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">
+                                    Abréviation
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.IntituleAbrg">
+                                <span asp-validation-for="@Model.Flre.IntituleAbrg" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label for="">
+                                    Domaine
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.Domaine">
+                                <span asp-validation-for="@Model.Flre.Domaine" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">
+                                    Mention
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.Mention">
+                                <span asp-validation-for="@Model.Flre.Mention" class="text-danger"></span>        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label for="">
+                                    Période D'habilitation
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.PeriodeHabilitation">
+                                <span asp-validation-for="@Model.Flre.PeriodeHabilitation" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">
+                                    Nombre De Période
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input type="text" class="form-control" asp-for="@Model.Flre.NbPeriodes">
+                                <span asp-validation-for="@Model.Flre.NbPeriodes" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <label for="">
+                                    Type Periode
+                                    @* <span class="required-field">*</span> *@
+                                </label>
+                                <select class="form-control" asp-for="@Model.Flre.CodeTypePeriode">
+                                    @foreach (var TypeP in @Model.Periodes)
+                                    {
+                                        <option value="@TypeP.Code">@TypeP.Type</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer btn-full-right">
+                        <button type="reset" class="btn b-button">Annuler</button>
+                        <button type="submit" class="btn b-button">Modifier</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

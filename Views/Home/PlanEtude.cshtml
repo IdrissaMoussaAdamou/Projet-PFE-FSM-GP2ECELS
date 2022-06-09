@@ -1,0 +1,320 @@
+@model PlanEtude
+@{
+ViewData["Title"] = "Plan D'Etude";
+}
+@section Styles{
+
+<link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+<link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+<link rel="stylesheet" href="~/css/showFiliere.css">
+
+}
+
+<div class="row">
+	<div class="col-lg-12">
+		<h3 class="page-header page-header-resize">
+			Plan D'Etude
+		</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12 ">
+		<form class="form-horizontal search-form" role="form" asp-controller="Home" asp-action="SearchPlanEtude"
+			method="POST">
+			<div class="form-group">
+				<div class="col-md-12 ">
+					<div class="form-group row">
+						<label for="" class="col-md-1 control-label">Filière</label>
+						<div class="col-md-5">
+							<select class="form-control" asp-for="@Model.IdFiliere" id="codeFiliere">
+								@foreach (var FiliereItem in @Model.ListFilieres)
+								{
+									<option value="@FiliereItem.Id">@FiliereItem.IntituleFr</option>
+								}
+							</select>
+						</div>
+						<label for="" class="col-md-1 control-label">Niveau</label>
+						<div class="col-md-5">
+							<select class="form-control" asp-for="@Model.IdNiveau" id="codeNiveau">
+								@foreach (var NiveauItem in @Model.ListNiveaux)
+								{
+									<option value="@NiveauItem.Id">@NiveauItem.IntituleAbrg</option>
+								}
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-12 form-row">
+					<div class="form-group row">
+						<label for="" class="col-md-1 control-label">Parcours</label>
+						<div class="col-md-5">
+							<select class="form-control" asp-for="@Model.IdParcours" id="codeParcours">
+								@foreach (var ParcoursItem in @Model.ListParcours)
+								{
+									<option value="@ParcoursItem.Id">@ParcoursItem.IntituleFr</option>
+								}
+							</select>
+						</div>
+
+						<label for="" class="col-md-1 control-label">Période</label>
+						<div class="col-md-5">
+							<select class="form-control" asp-for="@Model.Periode" id="codePeriode">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+									<option value="11">11</option>
+									<option value="12">12</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-md-2 col-lg-offset-10 form-row">
+					<button type="submit" class="btn b-button btn-sm btn-block">Chercher</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="row tabbable-top">
+	<div class="col-lg-12">
+		<div class="tabbable">
+			<ul class="nav nav-tabs padding-16">
+				<li class="active">
+					<a data-toggle="tab" href="#edit-basic">
+						Modules
+					</a>
+				</li>
+
+				<li>
+					<a data-toggle="tab" href="#edit-password">
+						Unités Enseignées
+					</a>
+				</li>
+			</ul>
+
+			<div class="tab-content profile-edit-tab-content" style="margin-bottom: 20px;">
+				<div id="edit-basic" class="tab-pane in active">
+					<div id="edit-settings" class="tab-pane">
+						<div class="row">
+							<div class="col-lg-12 text-right">
+								<button class="btn b-button btn-sm" onclick="CreateEditModule(-1)">
+									<i class="fa fa-plus fa-x"></i>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<table id="module-table" class="table table-striped table-bordered" style="width:100%">
+									<thead>
+										<tr>
+											<th>Code</th>
+											<th>Intitulé Français</th>
+											<th>Abréviation</th>
+											<th>Période</th>
+											<th>U.Enseignée</th>
+											<th class="actions-width-3">Actions</th>
+										</tr>
+									</thead>
+									<tbody id="module-table-body">
+										@foreach (var ModuleItem in @Model.ListModules)
+										{
+											<tr class="row-color" id="row_@ModuleItem.IdModule">
+												<td>@ModuleItem.Code</td>
+												<td>@ModuleItem.IntituleFr</td>
+												<td>@ModuleItem.IntituleAbrg</td>
+												<td>@ModuleItem.Periode</td>
+												<td>@ModuleItem.IntileFrUniteE</td>
+												<td class="text-right">
+													<a href="#" onclick="ShowModule(@ModuleItem.IdModule)">
+														<i class="fa fa-eye b-icon fa-2x  text-success" title="Consulter"></i>
+													</a>
+													<a href="#" onclick="CreateEditModule(@ModuleItem.IdModule)">
+														<i class="fa fa-edit fa-2x" style="color: #337ab7;"
+															title="Modifier"></i>
+													</a>
+													<a href="#"
+														onclick="ConfirmDeleteModule(@ModuleItem.IdModule)">
+														<i class="fa fa-trash-o b-icon fa-2x" 
+															title="Supprimer"></i>
+													</a>
+												</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- create Module -->
+						<!-- Modal -->
+						<div class="modal fade bd-example-modal-lg" id="niveau-module" tabindex="-1" role="dialog"
+							aria-labelledby="niveau-module-label" aria-hidden="true" style="display: none;">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">×</button>
+										<h4 class="modal-title text-primary" id="niveau-module-label">
+											Ajouter Un Module
+										</h4>
+									</div>
+									<div class="modal-body" id="module-body">
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End -->
+
+						<!-- Delete Module-->
+						<partial name="~/Views/Module/Delete.cshtml">
+						<!-- End -->
+
+						<!--Show Module -->
+
+						<div class="modal fade" id="show-module" tabindex="-1" role="dialog"
+							aria-labelledby="show-module" aria-hidden="true" style="display: none;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">×</button>
+										<h4 class="modal-title text-primary" id="show-module">
+											Informations Du Module
+										</h4>
+									</div>
+									<div class="modal-body" id="module-info">
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--End -->
+					</div>
+
+					<div class="row">
+						<div class="vspace-12-sm"></div>
+
+						<div class="col-xs-12 col-sm-8">
+							<div class="space-4"></div>
+						</div>
+					</div>
+				</div>
+
+				<div id="edit-password" class="tab-pane">
+					<div class="row">
+						<div class="col-lg-12 text-right">
+							<button class="btn b-button btn-sm" onclick="CreateEditUnite(-1)">
+								<i class="fa fa-plus fa-x"></i>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<table id="unite-table" class="table table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th>Code</th>
+										<th>Intitulé Français</th>
+										<th>Abréviation</th>
+										<th>Période</th>
+										<th>Nature</th>
+										<th class="actions-width-3">Actions</th>
+									</tr>
+								</thead>
+								<tbody id="unite-table-body">
+									@foreach (var UniteItem in @Model.ListUnites)
+									{
+										<tr class="row-color" id="row-@UniteItem.IdUniteEnseignement">
+											<td>@UniteItem.Code</td>
+											<td>@UniteItem.IntituleFr</td>
+											<td>@UniteItem.IntituleAbrg</td>
+											<td>@UniteItem.Periode</td>
+											<td>@UniteItem.Nature</td>
+											<td class="text-right">
+												<a href="#" onclick="ShowUnite(@UniteItem.IdUniteEnseignement)">
+													<i class="fa fa-eye b-icon fa-2x  text-success" title="Consulter"></i>
+												</a>
+												<a href="#" onclick="CreateEditUnite(@UniteItem.IdUniteEnseignement)">
+													<i class="fa fa-edit fa-2x" style="color: #337ab7;"></i>
+												</a>
+												<a href="#" onclick="ConfirmDeleteUnite(@UniteItem.IdUniteEnseignement)">
+													<i class="fa fa-trash-o b-icon fa-2x" ></i>
+												</a>
+											</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- create Unite D'Enseignement -->
+							<div class="modal fade bd-example-modal-lg" id="create-unite" tabindex="-1" role="dialog" aria-labelledby="unite-label" aria-hidden="true" style="display: none;">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+											<h4 class="modal-title text-primary" id="unite-label">
+												Ajouter Une Unite Enseignement
+											</h4>
+										</div>
+										<div class="modal-body" id="unite-body">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						<!--Ends -->
+
+						<!-- Delete Unite D'Enseignement -->
+						<partial name="~/Views/UEnseignement/Delete.cshtml">
+						<!--Ends -->
+						<!-- Show Unite -->
+						<div class="modal fade" id="show-unite" tabindex="-1" role="dialog" aria-labelledby="unite-show" aria-hidden="true"	style="display: none;">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h4 class="modal-title text-primary" id="unite-show">
+											Information De L' Unité D'Enseignement
+										</h4>
+									</div>
+									<div class="modal-body" id="unite-info">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ </div>  
+<partial name="~/Views/Shared/_Information.cshtml">
+ 
+
+@section Scripts{
+<!-- DataTables JavaScript -->
+<script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+@* Validation script *@
+<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+	@* custom datatable properties *@
+	<script src="~/js/planEtude.js"></script>
+}

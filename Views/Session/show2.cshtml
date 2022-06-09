@@ -1,0 +1,613 @@
+﻿@model UneSession
+@{
+    ViewData["ids"] = Model.Session.Id;
+    ViewData["Title"] = "Détail Session";
+    ViewData["AppName"] = "FSM - GDS";
+}
+@{
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/chargeEnseignement.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+}
+
+
+<div class="row row-mt-20">
+    <div class="row row-container container-margin2">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <h3 class="page-header page-header-resize">Détails Session</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-p102">
+        <div @*class="panel"*@>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-lg-offset-2 flex-container " style="margin-left: 6%">
+                        <div class="col-lg-10 info-body-content no-border flex-container-child s-border">
+                            <div class="row row-info row-info-m30 row-mt-20">
+                                <div class="row">
+                                    <div class="col-lg-12" style="margin-bottom: 10px;">
+                                        <div class="col-md-1" style="padding-right: 0px;">
+                                            <i class="fa fa-info fa-5x" style="font-size: 9em;"></i>
+                                        </div>
+
+                                        <div class="col-md-10" style="padding-top: 15px;">
+                                            <div class="form-group row">
+                                                <label for="" class="col-md-1 col-lg-offset-3">Designation: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.Designation</span>
+                                                </div>
+                                                @*<label for="" class="col-md-1">Identifiant: </label>
+                                                    <div class="col-md-5">
+                                                        <span class="form-check-inline col-lg-8">@Model.Session.Id</span>
+                                                    </div>*@
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="" class="col-md-1">AnneeUniv: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.AnneeUniversitaire</span>
+                                                </div>
+
+                                                <label for="" class="col-md-1">Période: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.Periode</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="" class="col-md-1">DateBebut: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.DateBebut.ToShortDateString()</span>
+                                                </div>
+
+                                                <label for="" class="col-md-1">DateFin: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.DateFin.ToShortDateString()</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="" class="col-md-1">Type: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.TypeSession</span>
+                                                </div>
+
+                                                <label for="" class="col-md-1">Etat: </label>
+                                                <div class="col-md-5">
+                                                    <span class="form-check-inline col-lg-8">@Model.Session.Etat</span>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" id="TeacherId">
+                                        </div>
+                                        <div class="col-md-1" style="padding-left: 0px;">
+                                            <div class="col-md-8 offset-md-2" style="padding-top: 50px;">
+                                                <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSession(@Model.Session.Id)">
+                                                    Modifier
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="mode-container">
+                                <div class="row row-tabbable">
+                                    <div class="col-lg-12 col-p30">
+                                        <div class="row tabbable-top">
+                                            <div class="col-lg-12">
+                                                <div class="tabbable">
+                                                    <ul class="nav nav-tabs padding-16">
+
+                                                        <li class="active">
+                                                            <a data-toggle="tab" href="#Seance-tab">
+                                                                Séance
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-toggle="tab" href="#Journée-tab">
+                                                                Journée
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-toggle="tab" href="#Salle-tab">
+                                                                Salle
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-toggle="tab" href="#Surveillants-tab">
+                                                                Surveillants
+                                                            </a>
+                                                        </li>
+
+                                                        <li>
+                                                            <a data-toggle="tab" href="#Section-tab">
+                                                                Section
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="tab-content profile-edit-tab-content " id="group-panels">
+                                                        <div id="Seance-tab" class="tab-pane in active">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionSc(0,@Model.Session.Id)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table class="table @*info-table*@ table-striped table-bordered" style="width:100%; margin-bottom:0px;" id="table-Séance">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Designation</th>
+                                                                                <th>DesignationAbregee</th>
+                                                                                <th>HeureDebut</th>
+                                                                                <th>HeureFin</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="Séance-tab-tbody">
+                                                                            @foreach (var @JItem in @Model.ListSeance)
+                                                                            {
+                                                                                <tr class="row-color" id="row_@JItem.Id">
+                                                                                    <td>@JItem.Designation</td>
+                                                                                    <td>@JItem.DesignationAbregee</td>
+                                                                                    <td>@JItem.HeureDebut</td>
+                                                                                    <td>@JItem.HeureFin</td>
+                                                                                    <td class="text-center">
+                                                                                        <a href="#" onclick="ShowSeance(@JItem.Id)">
+                                                                                            <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                                                                        </a>
+                                                                                        <a href="#" onclick="CreateEditSessionSc(@JItem.Id,@JItem.IdSession)">
+                                                                                            <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+                                                                                        </a>
+                                                                                        <a href="#" onclick="ConfirmDeleteSc(@JItem.Id)">
+                                                                                            <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="Journée-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionJ(0,@Model.Session.Id)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table class="table @*info-table*@ table-striped table-bordered" style="width:100%" id="table-Jour">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Jour</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="Journée-tab-tbody">
+                                                                            @foreach (var @JItem in @Model.ListJournée)
+                                                                            {
+                                                                                <tr class="row-color" id="row_@JItem.Id">
+                                                                                    <td>@JItem.Jour.ToLongDateString()</td>
+                                                                                    <td class="text-center">
+                                                                                        <a href="#" onclick="ShowJour(@JItem.Id)">
+                                                                                            <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                                                                        </a>
+                                                                                        <a href="#" onclick="CreateEditSessionJ(@JItem.Id,@JItem.IdSession)">
+                                                                                            <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+                                                                                        </a>
+                                                                                        <a href="#" onclick="ConfirmDeleteJ(@JItem.Id)">
+                                                                                            <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="Salle-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionSalle(@Model.Session.Id)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table class="table i@*nfo-table*@ table-striped table-bordered" style="width:100%" id="table-Salle">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>CodeSalle</th>
+                                                                                <th>CapaciteEnseignement</th>
+                                                                                <th>CapaciteExamen</th>
+                                                                                <th>NbSurveillants</th>
+                                                                                <th>Etat</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="Salle-tab-tbody">
+                                                                            @foreach (var @JItem in @Model.ListSalles)
+                                                                            {
+                                                                                <tr class="row-color" id="row_@JItem.Id">
+                                                                                    <td>@JItem.CodeSalle</td>
+                                                                                    <td>@JItem.CapaciteEnseignement</td>
+                                                                                    <td>@JItem.CapaciteExamen</td>
+                                                                                    <td>@JItem.NbSurveillants</td>
+                                                                                    <td>@JItem.Etat</td>
+                                                                                    <td class="text-center">
+                                                                                        <a href="#" onclick="ShowSalle('@JItem.CodeSalle')">
+                                                                                            <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                                                                        </a>
+
+                                                                                        <a href="#" onclick="ConfirmDeleteS(@JItem.Id)">
+                                                                                            <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="Section-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionSection(@Model.Session.Id,'@Model.Session.AnneeUniversitaire')">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 tab-scroll">
+                                                                    <table class="table @*info-table*@ table-striped table-bordered" style="width:100%" id="table-Section">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>IntituleFiliere</th>
+                                                                                <th>IntituleParcours</th>
+                                                                                <th>Niveau</th>
+                                                                                <th>Periode</th>
+                                                                                <th>NbEtudiants</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="encadrement-tab-tbody">
+                                                                            @foreach (var @JItem in @Model.ListSection)
+                                                                            {
+                                                                                <tr class="row-color" id="row_@JItem.Id">
+                                                                                    <td>@JItem.IntituleFiliere</td>
+                                                                                    <td>@JItem.IntituleParcours</td>
+                                                                                    <td>@JItem.Niveau</td>
+                                                                                    <td>@JItem.Periode</td>
+                                                                                    <td>@JItem.NbEtudiants</td>
+                                                                                    <td class="text-center">
+                                                                                        <a href="#" onclick="ShowSection(@JItem.Id)">
+                                                                                            <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                                                                        </a>
+
+                                                                                        <a href="#" onclick="ConfirmDeleteSection(@JItem.Id)">
+                                                                                            <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div id="Surveillants-tab" class="tab-pane">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 text-right">
+                                                                    <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionSurveillant(@Model.Session.Id)">
+                                                                        <i class="fa fa-plus fa-x"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <table class="table @*info-table*@ table-striped table-bordered" style="width:100%" id="table-Enseignant">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>CIN</th>
+                                                                                <th>Nom</th>
+                                                                                <th>Prenom</th>
+                                                                                <th>Grade</th>
+                                                                                <th>Statut</th>
+                                                                                <th>SituationAdministrative</th>
+                                                                                <th>Actions</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody id="charge-divers-tbody">
+                                                                            @foreach (var @JItem in @Model.ListSurveillants)
+                                                                            {
+                                                                                <tr class="row-color" id="row_@JItem.Id">
+                                                                                    <td>@JItem.CIN</td>
+                                                                                    <td>@JItem.Nom</td>
+                                                                                    <td>@JItem.Prenom</td>
+                                                                                    <td>@JItem.Grade</td>
+                                                                                    <td>@JItem.Statut</td>
+                                                                                    <td>@JItem.SituationAdministrative</td>
+                                                                                    <td class="text-center">
+                                                                                        <a href="#" onclick="ShowSurveillant('@JItem.CIN')">
+                                                                                            <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                                                                        </a>
+
+                                                                                        <a href="#" onclick="ConfirmDeleteSurveillant(@JItem.Id)">
+                                                                                            <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<input type="hidden" id="CodeAnneeUniv">-->
+<!-- create Session -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="Session-create" tabindex="-1" role="dialog" aria-labelledby="create-Session" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-Session">Ajouter Une Session</h4>
+            </div>
+            <div class="modal-body" id="create-edit-Session-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- create SessionJour -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionJour-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionJour" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionJour">Ajouter Une Sessionj</h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionJour-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Show SesionJour -->
+<div class="modal fade" id="show-SessionJ" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Journéé Session
+                </h4>
+            </div>
+            <div class="modal-body" id="SessionJ-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- create SessionSalle -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionSalle-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionSalle" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionSalle">Ajouter Une Salle à la Session</h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionSalle-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Show SessionSalle -->
+<div class="modal fade" id="show-SessionSalle" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Salle
+                </h4>
+            </div>
+            <div class="modal-body" id="SessionSalle-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- create SessionSection -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionSection-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionSection" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionSection">Ajouter Une Section à la Session</h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionSection-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Show SessionSection -->
+<div class="modal fade" id="show-SessionSection" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Section
+                </h4>
+            </div>
+            <div class="modal-body" id="SessionSection-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- create SessionSeance -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionSeance-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionSeance" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionSeance"></h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionSeance-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Show SessionSeance -->
+<div class="modal fade" id="show-SessionSc" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Séance de la Session
+                </h4>
+            </div>
+            <div class="modal-body" id="SessionSc-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- create SessionSurveillant -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionSurveillant-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionSurveillant" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionSurveillant">Ajouter Un Surveillant à la Session</h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionSurveillant-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Show SessionSurveillant -->
+<div class="modal fade" id="show-SessionSurveillant" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Surveillant
+                </h4>
+            </div>
+            <div class="modal-body" id="SessionSurveillant-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete SaessionJour -->
+<partial name="~/Views/SessionJour/Delete.cshtml">
+
+    <!-- delete SaessionSalle -->
+    <partial name="~/Views/SessionSalle/Delete.cshtml">
+
+        <!-- delete SessionSeance -->
+        <partial name="~/Views/SessionSeance/Delete.cshtml">
+
+            <!-- delete SessionSurveillant -->
+            <partial name="~/Views/SessionSurveillant/Delete.cshtml">
+
+                <!-- delete SessionSection -->
+                <partial name="~/Views/SessionSection/Delete.cshtml">
+
+
+                    @section Scripts{
+
+                        <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+                        <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+                        <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+                        <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+                            <script src="~/js/showSession.js"></script>
+                    }

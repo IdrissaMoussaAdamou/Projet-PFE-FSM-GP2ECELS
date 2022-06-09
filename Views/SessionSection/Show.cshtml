@@ -1,0 +1,87 @@
+﻿@model SessionSection
+
+@{ var typediplome = ViewBag.typediplo; }
+
+<div id="edit-basic" class="tab-pane">
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">IntituleFiliere</div>
+            <div class="profile-info-value">
+                <span class="edita ble">@Model.IntituleFiliere</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">IntituleFiliereAbrg</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.IntituleFiliereAbrg</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">IntituleParcours</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.IntituleParcours</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">IntituleParcoursAbrg</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.IntituleParcoursAbrg</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Niveau</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Niveau</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Niveau du diplome</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Niveaudyplo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">Periode</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.Periode</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">NB d'Etudiants</div>
+            <div class="profile-info-value">
+                <span class="editable">@Model.NbEtudiants</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-user-info profile-user-info-striped">
+        <div class="profile-info-row">
+            <div class="profile-info-name">TypeDiplome</div>
+            <div class="profile-info-value">
+                <span class="editable">@typediplome</span>
+            </div>
+        </div>
+    </div>
+
+</div>

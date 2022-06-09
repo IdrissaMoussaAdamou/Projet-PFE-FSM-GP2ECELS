@@ -1,0 +1,47 @@
+@model List<NomOption> 
+    @if (@Model.Count == 0)
+    {
+        <h3 class="page-header text-primary">Pas de Modules Optionnelles Pour Les Paramètres Donnés</h3>
+    }
+    else
+    {
+        <form id="nom-option-form">
+            @* <input type="hidden" name="CodeAnneeUniv" id="option-year"> *@
+           @for (int i = 0; i < Model.Count; i++)
+           {
+               @Html.HiddenFor(x => x[i].IdModule)
+                @Html.HiddenFor(x => x[i].CodeAnneeUniv)
+                @Html.HiddenFor(x => x[i].Id)
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label for="" class="col-md-1 input-label">@Model[i].ModuleIntuleFr</label> 
+                        <div class="col-md-5">
+                            <label for="">
+                                Intitulé
+                                <span class="required-field">*</span>
+                            </label>
+                            @Html.TextBoxFor(x => x[i].Intitule, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x[i].Intitule, "", new {@class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="">
+                                Intitulé Abrégé
+                                <span class="required-field">*</span>
+                            </label>
+                            @Html.TextBoxFor(x => x[i].IntituleAbrg, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x[i].IntituleAbrg, "", new {@class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="modal-footer btn-full-right">
+                <button type="reset" class="btn b-button">Annuler</button>
+                <button type="button" class="btn b-button" id="submit-nom-option">
+                    @if(@Model[0].Id == 0){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+                </button>
+            </div>
+        </form>
+    }
+    
+    

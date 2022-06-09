@@ -1,0 +1,86 @@
+    @model List<Departement>
+    @{
+    ViewData["Title"] = "Départements";
+    }
+    @section Styles{
+
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Liste Des Départements</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-right">
+            <button class="btn b-button btn-sm btn-bottom" id="btnCreateDepartement" onclick="CreateEditDepartement('')">
+                <i class="fa fa-plus fa-x"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="dataTables-example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Intitulé Français</th>
+                                <th>Intitulé Arabe</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departement-tbody">
+                            @foreach (var Dept in Model)
+                            {
+                                <tr class="row-color" id="row_@Dept.Code">
+                                    <td>@Dept.Code</td>
+                                    <td>@Dept.IntituleFr</td>
+                                    <td>@Dept.IntituleAr</td>
+                                    <td class="text-right">
+                                        <a href="#" onclick="CreateEditDepartement(@Dept.Code)">
+                                            <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+                                        </a>
+                                        <a href="#" onclick="ConfirmDelete(@Dept.Code)">
+                                            <i class="fa fa-trash-o b-icon fa-2x"  title="Supprimer"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- create departement -->
+    <!-- Modal -->
+    <div class="modal fade" id="departement-create" tabindex="-1" role="dialog" aria-labelledby="create-departement"
+        aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-primary" id="create-departement">Ajouter Un Département</h4>
+                </div>
+                <div class="modal-body" id="create-edit-departemet-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends -->
+
+    <partial name="~/Views/Shared/_Information.cshtml">
+    <!-- delete departement -->
+    <partial name="~/Views/Departement/Delete.cshtml">
+    @section Scripts{
+    <!-- DataTables JavaScript -->
+    <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+    <script src="~/js/departement.js"></script>
+}

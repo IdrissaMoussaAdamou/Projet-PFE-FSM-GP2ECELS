@@ -1,0 +1,81 @@
+@model TypeEncadrement
+
+<form id="type-encadrement-from">
+    <input type="hidden" asp-for="Id">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="">
+                Libellé
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="Libelle">
+            <span class="text-danger" asp-validation-for="Libelle"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label for="">Cycle</label>
+            <select class="form-control" asp-for="Cycle">
+                <option value="Licence">Licence</option>
+                <option value="Master">Master</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="">Nature Charge</label>
+            <select class="form-control" asp-for="NatureCharge">
+                <option value="Cours">Cours</option>
+                <option value="TD">TD</option>
+                <option value="TP">TP</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label for="">
+                Volume
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="VolumeHebdoCharge">
+            <span class="text-danger" asp-validation-for="VolumeHebdoCharge"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-4">
+            <label for="">Periode</label>
+            <select class="form-control" asp-for="Periode">
+                <option value="Semestre">Semestre</option>
+                <option value="Trimestre">Annuel</option>
+                <option value="Quater">Annuel</option>
+                <option value="Annee">Annuel</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="">Numéro de la Période</label>
+            <select class="form-control" asp-for="NumPeriodeDansAnnee">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="">
+                Nombre de semaine
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="NbSemainesPeriode">
+            <span class="text-danger" asp-validation-for="NbSemainesPeriode"></span>
+        </div>
+    </div>
+
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type ="button" class="btn b-button" id="submit-typeEncadrement">
+            @if(Model.Id == 0){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+        </button> 
+    </div>
+</form>

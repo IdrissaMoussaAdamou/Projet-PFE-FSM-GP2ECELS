@@ -1,0 +1,96 @@
+@model Projet_PFE.Models.UniteEnseignement
+@{
+    ViewData["Title"] = "Modifier Une Unité Enseignement";
+}
+
+@{
+    var EditUniteId = @Model.Code + @Model.IdNiveau;
+    <div class="modal fade " id="@EditUniteId" tabindex="-1" role="dialog" aria-labelledby="unite-edit" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-primary" id="unite-edit">
+                         Modifier Une Unite Enseignement
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form asp-controller="UEnseignement" asp-action="Update" method="post">
+                        <input type="hidden" asp-for="@Model.IdNiveau" value="@Model.IdNiveau">
+                        <input type="hidden" asp-for="@Model.IdParcours" value="@Model.IdParcours">
+                        <input type="hidden" asp-for="@Model.Periode" value="@Model.Periode">
+                        <input type="hidden" name="pCode" value="@Model.Code">
+                        
+                        <div class="form-group">
+                            <label for="">
+                                Code
+                                <span class="required-field">*</span>
+                            </label>
+                                <input type="text" class="form-control" asp-for="@Model.Code" value="@Model.Code">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">
+                                Intitulé Français
+                                <span class="required-field">*</span>
+                            </label>
+                            <input type="text" class="form-control" asp-for="@Model.IntituleFr" value="@Model.IntituleFr">
+                        </div>
+
+                            
+                        <div class="form-group">
+                            <label for="">
+                                Intitulé Arabe
+                                <span class="required-field">*</span>
+                            </label>
+                            <input type="text" class="form-control" asp-for="@Model.IntituleAr" value="@Model.IntituleAr" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">
+                                Abréviation
+                                <span class="required-field">*</span>
+                            </label>
+                            <input type="text" class="form-control" asp-for="@Model.IntituleAbrg" value="@Model.IntituleAr">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">
+                            Nature
+                                <span class="required-field">*</span>
+                            </label>
+                            <select class="form-control" asp-for="@Model.Nature"  value="@Model.Nature">
+                                <option value="Fondamentale">Fondamentale</option>
+                                <option value="Transversale">Transversale</option>
+                                <option value="Optionnelle">Optionnelle</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">
+                                Credits
+                                <span class="required-field">*</span>
+                            </label>
+                            <input type="text" class="form-control" asp-for="@Model.Credits" value="@Model.Credits" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">
+                                Coefficient
+                                <span class="required-field">*</span>
+                            </label>
+                            <input type="text" class="form-control" asp-for="@Model.Coefficient" value="@Model.Coefficient">
+                        </div>
+    
+                        <div class="modal-footer btn-full-right">    
+                            <button type="reset" class="btn b-button">Annuler</button>
+                            <button type="submit" class="btn b-button">Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>  
+    </div>    
+}
+    
+    

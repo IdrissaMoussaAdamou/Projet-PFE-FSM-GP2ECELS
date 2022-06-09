@@ -1,0 +1,100 @@
+﻿@model Session
+<form id="Session-form">
+    <input type="hidden" name="OldCode" value="@Model.Id">
+    @*<input type="hidden" asp-for="Code">*@
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Désignation
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="Designation">
+                <span class="text-danger" asp-validation-for="Designation"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    DateDebut
+                    <span class="required-field">*</span>
+                </label>
+                <input type="date" class="form-control" asp-for="DateBebut">
+                <span class="text-danger" asp-validation-for="DateBebut"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    AnnéeUniversitaire
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="AnneeUniversitaire">
+                <span class="text-danger" asp-validation-for="AnneeUniversitaire"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    DateFin
+                    <span class="required-field">*</span>
+                </label>
+                <input type="date" class="form-control" asp-for="DateFin">
+                <span class="text-danger" asp-validation-for="DateFin"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Periode
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" asp-for="Periode">
+                    <Option value="semestre 1">semestre 1</Option>
+                    <Option value="Semestre 2">Semestre 2</Option>
+                    <Option value="trimtestre">trimtestre</Option>
+                    <Option value="Rattrapage">Rattrapage</Option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    TypeSession
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" asp-for="TypeSession">
+                    <Option value="Devoirs surveillés">Devoirs surveillés</Option>
+                    <Option value="Examen">Examen</Option>
+                    <Option value="Rattrapage">Rattrapage</Option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6 col-lg-push-3">
+                <label for="">
+                   Etat
+                    <span class="required-field">*</span>
+                </label>
+                <select class="form-control" asp-for="Etat">
+                    <Option value="En Cours">En Cours</Option>
+                    <Option value="Cloturée">Cloturée</Option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="button" class="btn b-button" id="submit">
+           
+            <span> Enregistrer </span> 
+            
+        </button>
+    </div>
+</form>

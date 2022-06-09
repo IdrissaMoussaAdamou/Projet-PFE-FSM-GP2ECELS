@@ -1,0 +1,79 @@
+@model List<ImportEnseignant>
+
+@if(@Model.Count > 0)
+{
+    <form id="import-form">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label class="col-md-4 col-lg-offset-1" for=""><strong>Nom & Prénom</strong> </label>
+                <label class="col-md-3" for=""><strong>CIN</strong> </label>
+                <label class="col-md-4 " for=""><strong>Département </strong></label>
+            </div>
+            <div class="col-md-12 empty-tab"></div>
+        </div>
+        <input type="hidden" id="AnneeUniv" name="AnneeUniv">
+        @for (var i = 0; i < @Model.Count; i++)
+        {
+            @Html.HiddenFor(x => x[i].CIN)
+            @Html.HiddenFor(x => x[i].Nom)
+            @Html.HiddenFor(x => x[i].Prenom)
+            @Html.HiddenFor(x => x[i].CodeDepartement)
+            @Html.HiddenFor(x => x[i].IntituleFrDepartement)
+            @Html.HiddenFor(x => x[i].Grade)
+            @Html.HiddenFor(x => x[i].Statut)
+
+            @if( i != Model.Count)
+            {
+                <div class="form-group row zero-margin-bottom">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            @Html.CheckBoxFor(x => x[i].Selected)
+                        </div>
+                        <label class="col-md-4" for="">@Model[i].Nom @Model[i].Prenom </label>
+                        <label class="col-md-3" for="">@Model[i].CIN </label>
+                        <label class="col-md-4 " for="">@Model[i].IntituleFrDepartement </label>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            @Html.CheckBoxFor(x => x[i].Selected)
+                        </div>
+                        <label class="col-md-4" for="">@Model[i].Nom @Model[i].Prenom </label>
+                        <label class="col-md-3" for="">@Model[i].CIN </label>
+                        <label class="col-md-4 " for="">@Model[i].IntituleFrDepartement </label>
+                    </div>
+                </div>
+            }
+                
+        }
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-2">
+                    <input  type="checkbox" id="checkAll">
+                    <span>Cocher Tous</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer btn-full-right">
+            <button type="button" class="btn b-button" id="submit">
+                Importer
+            </button>
+        </div>
+    </form>
+}
+else
+{
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="col-md-4 col-lg-offset-1" for=""><strong>Nom & Prénom</strong> </label>
+            <label class="col-md-3" for=""><strong>CIN</strong> </label>
+            <label class="col-md-4 " for=""><strong>Département </strong></label>
+        </div>
+        <div class="col-md-12 empty-tab"></div>
+    </div> 
+}

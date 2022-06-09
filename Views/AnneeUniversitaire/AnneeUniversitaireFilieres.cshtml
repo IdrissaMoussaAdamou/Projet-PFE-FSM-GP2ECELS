@@ -1,0 +1,87 @@
+@model List<Filiere>
+
+@{
+    ViewData["Title"] = "Annee Universitaires Filiéres";
+    var Annee = ViewBag.Annee;
+    TempData["Annee"] = Annee.Code;
+    ViewData["AppName"] = "FSM - GPE";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/anneeUniversitaire.css"> 
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-resize annee-header"><strong>Année Universitaire: @Annee.Code</strong></h3>
+        <h3 class="navigation-link">
+            <a id="link1" asp-controller="AnneeUniversitaire" asp-action="AnneeUniversitaireFilieres" asp-route-Code="@Annee.Code">Filiéres et Parcours ensignés</a> 
+            <a id="link2" asp-controller="AnneeUniversitaire" asp-action="Consult" asp-route-Code="@Annee.Code" >| Plan Etudes</a>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <button class="btn b-button btn-sm btn-bottom archive-btn" id= "FiliereParcours">
+            <i class="fa fa-plus fa-x"></i>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12" style="padding-left: 30px;">
+        <table id="annee-filieres" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Dîplome</th>
+                    <th>Spécialité</th>
+                    <th>Filiére</th>
+                    <th>Période D'Habilitation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="ann-filiere-tbody">
+                @foreach (var FiliereItem in @Model)
+                {
+                    <tr class="row-color" id="row_@FiliereItem.Id">
+                        <td>@FiliereItem.IntituleFrTypeDiplome</td>
+                        <td>@FiliereItem.Domaine</td>
+                        <td>@FiliereItem.IntituleFr</td>
+                        <td>@FiliereItem.PeriodeHabilitation</td>
+                        <td class="text-right">
+                            <a href="#" onclick="ShowDetail('@Annee.Code',@FiliereItem.Id)" title="Consulter">
+                                <i class="fa fa-eye b-icon fa-2x  text-success"></i>
+                            </a>
+                            @if(@Annee.EtatPlanEtudes == "En Cours")
+                            {
+                                <a href="#" onclick="DeleteAnneUnivFiliere(@FiliereItem.Id)">
+                                    <i class="fa fa-trash-o b-icon fa-2x"  title="Supprimer"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<input type="hidden" id="CodeAnneeUniv" value="@Annee.Code">
+<!-- create Année Universitaire Filiére -->
+<div class="modal fade bd-example-modal-lg" id="Create-annee-filiere" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-headr" id="annee-filiere-header">
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- End -->
+  
+    @section Scripts{
+    <!-- DataTables JavaScript -->
+    <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+    <script src="~/js/anneeUniversitaire.js"> </script>
+} 

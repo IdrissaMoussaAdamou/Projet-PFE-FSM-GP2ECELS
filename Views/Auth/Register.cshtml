@@ -1,0 +1,96 @@
+@model RegisterModel
+
+<form id="user-register-form">
+    <input type="hidden" asp-for="Id">
+    <input type="hidden" name="OldCIN" value="@Model.CIN">
+    <input type="hidden" name="OldEmail" value="@Model.Email">
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="">
+                Nom
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="Nom">
+            <span class="text-danger" asp-validation-for="Nom"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="">
+                Prenom
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="Prenom">
+            <span class="text-danger" asp-validation-for="Prenom"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="">Profil</label>
+            <select class="form-control" asp-for="Profil">
+                <option value="none"> - - - - - - - - - - - - - - - - </option>
+                <option value="AgentAdministratif">AgentAdministratif</option>
+                <option value="AgentADDepartement">AgentADDepartement</option>
+                <option value="ChefDepartement">ChefDepartement</option>
+                <option value="DirecteurEtude">DirecteurEtude</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="">Affiliation</label>
+            <select class="form-control" asp-for="Affiliation">
+                @if(@Model.Id > 0)
+                {
+                    <option value="@Model.Affiliation">@Model.Affiliation</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="Affiliation"></span>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="">
+                Email
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="Email">
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label for="">
+                CIN
+                <span class="required-field">*</span>
+            </label>
+            <input type="text" class="form-control" asp-for="CIN">
+            <span class="text-danger" asp-validation-for="CIN"></span>
+        </div>
+    </div>
+    @if(@Model.Id == 0)
+    {
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="">
+                    Mot de passe
+                    <span class="required-field">*</span>
+                </label>
+                <input type="password" class="form-control" asp-for="Password">
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+            <div class="col-md-6">
+                <label for="">
+                    confirmation Mot de Passe
+                    <span class="required-field">*</span>
+                </label>
+                <input type="password" class="form-control" asp-for="ConfirmPassword">
+                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+            </div>
+        </div>
+    }
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="submit" class="btn b-button" id="register-user-submit">
+            @if(@Model.Id == 0){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+        </button>
+    </div>
+</form>

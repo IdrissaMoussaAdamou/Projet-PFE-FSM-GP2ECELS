@@ -1,0 +1,108 @@
+@model PlanEtude
+@{
+ViewData["Title"] = "Ajouter Une Unité Enseignement";
+}
+
+<form id="unite-form">
+    <input type="hidden" asp-for="@Model.NewUniteE.IdNiveau" value="@Model.IdNiveau">
+    <input type="hidden" asp-for="@Model.NewUniteE.IdParcours" value="@Model.IdParcours">
+    <input type="hidden" asp-for="@Model.NewUniteE.OldCode" value="@Model.NewUniteE.Code">
+    <input type="hidden" asp-for="@Model.NewUniteE.IdUniteEnseignement">
+    
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Code
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.Code" placeholder="Code ...">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.Code"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Intitulé Français
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.IntituleFr">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.IntituleFr"></span>        
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Intitulé Arabe
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.IntituleAr">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.IntituleAr"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Abréviation
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.IntituleAbrg">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.IntituleAbrg"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">Nature</label>
+                <select class="form-control" asp-for="@Model.NewUniteE.Nature">
+                    <option value="Fondamentale">Fondamentale</option>
+                    <option value="Transversale">Transversale</option>
+                    <option value="Optionnelle">Optionnelle</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Période
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.Periode">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.Periode"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Credits
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.Credits">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.Credits"></span>
+            </div>
+            
+            <div class="col-md-6">
+                 <label for="">
+                    Coefficient
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="@Model.NewUniteE.Coefficient">
+                <span class="text-danger" asp-validation-for="@Model.NewUniteE.Coefficient"></span>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="buttton" class="btn b-button" id="submit-unite">
+            @if(string.IsNullOrEmpty(@Model.NewUniteE.Code)){ <span> Enregistrer </span> } else{ <span> Modifier </span>
+            }
+        </button>
+    </div>
+</form>

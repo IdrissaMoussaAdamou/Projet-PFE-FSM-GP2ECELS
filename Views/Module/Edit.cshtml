@@ -1,0 +1,185 @@
+@model Projet_PFE.Models.Module
+@{
+    ViewData["Title"] = "Modifier Une Filière";
+}
+
+@{
+    var EditModuleId =  @Model.IdNiveau + @Model.Code ;
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="@EditModuleId" tabindex="-1" role="dialog" aria-labelledby="edit-module" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title text-primary" id="edit-module">
+                        Modifier Un Module
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal " role="form" asp-controller="Module" asp-action="Update" method="POST"> 
+                        <input type="hidden" asp-for="@Model.IdNiveau" value="@Model.IdNiveau">
+                        <input type="hidden" asp-for="@Model.IdParcours" value="@Model.IdParcours">
+                        <input type="hidden" asp-for="@Model.Periode" value="@Model.Periode">
+                        <input type="hidden" name="pCode" value="@Model.Code">
+                        <input type="hidden" asp-for="@Model.IdUniteEnseignement" value="@Model.IdUniteEnseignement">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="">
+                                    Unite Enseignement
+                                    <span class="required-field">*</span>
+                                </label>
+                                <input asp-for="@Model.IntileFrUniteE" class="form-control" value="@Model.IntileFrUniteE">                                
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="">
+                                        Code
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.Code" value="@Model.Code">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="">
+                                    Intitulé Français
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.IntituleFr" value="@Model.IntituleFr">
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="">
+                                    Intitulé Arabe
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.IntituleAr" value="@Model.IntituleAr">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="">
+                                        Abréviation
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.IntituleAbrg" value="@Model.IntituleAbrg">
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <label for="">
+                                        Nature
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <select class="form-control" asp-for="@Model.Nature" value="@Model.Nature">
+                                        <option value="Fondamentale">Fondamentale</option>
+                                        <option value="Transversale">Transversale</option>
+                                        <option value="Optionnelle">Optionnelle</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="">
+                                        Régime D'Examen
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <select class= "form-control" asp-for="@Model.RegimeExamen" value="@Model.RegimeExamen">
+                                        <option value="Contrôle Continu">Contrôle Continu</option>
+                                        <option value="Regime Mixte"> Regime Mixte</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <label for="">
+                                    Crédit
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.Credits" value="@Model.Credits">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="">
+                                        Coefficient
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.Coefficient" value="@Model.Coefficient">
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <label for="">
+                                    Univté Volume Horaire
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.UniteVolumeHoraire" value="@Model.UniteVolumeHoraire">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="">
+                                    Durée Examen
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.DureeExamen" value="@Model.DureeExamen">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <label for="">
+                                    Nombre d'Heure De Cours 
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.NbHeuresCours" value="@Model.NbHeuresCours">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="">
+                                        Nombre d'Heure De TD 
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.NbHeuresTD" value="@Model.NbHeuresTD">
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <label for="">
+                                    Nombre d'Heure De TP
+                                    <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.NbHeuresTP" value="@Model.NbHeuresTP">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="">
+                                        Nombre d'Heure De CI
+                                        <span class="required-field">*</span>
+                                    </label>
+                                    <input type="text" class="form-control" asp-for="@Model.NbHeuresCI" value="@Model.NbHeuresCI">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer btn-full-right">    
+                            <button type="reset" class="btn b-button">Annuler</button>
+                            <button type="submit" class="btn b-button">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,264 @@
+@model List<RegisterModel>
+@using Projet_PFE.Models; 
+@{
+	var UserAccount = ViewBag.UserAccount;
+	if(UserAccount.Profil == "SuperAdministrateur")
+	{
+		ViewData["Title"] = "Gestion des Comptes";
+	}
+	else{
+		ViewData["Title"] = "Gestion de Compte";
+	}
+	ViewData["AppName"] = "FSM - GP2ECE";
+	var PasswordModel = new ChangePassword();	
+}
+@section Styles{
+
+<link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+<link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+<link rel="stylesheet" href="~/css/showFiliere.css">
+<link rel="stylesheet" href="~/css/chargeEnseignement.css">
+
+
+}
+<div class="row">
+	<div class="col-lg-12 header-container">
+		<h3 class="page-header page-header-resize">
+			Gestion De Compte
+		</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-16">
+			<li class="active">
+				<a data-toggle="tab" href="#user-info">
+
+					Infos
+				</a>
+			</li>
+			@if(UserAccount.Profil == "SuperAdministrateur")
+			{
+				<li>
+					<a data-toggle="tab" href="#manage-accounts">
+						Autres Comptes
+					</a>
+				</li>	
+			}
+
+			<li>
+				<a data-toggle="tab" href="#edit-password">
+					Nouveau Password
+				</a>
+			</li>
+		</ul>
+
+		<div class="tab-content profile-edit-tab-content " style="margin-bottom: 20px;" id="group-panels">
+			<div id="user-info" class="tab-pane in active">
+				<h4 class="header blue bolder smaller text-primary">Informations Générales</h4>
+
+				<div class="profile-user-info profile-user-info-striped">
+					<div class="profile-info-row">
+						<div class="profile-info-name">Nom - Prènom</div>
+						<div class="profile-info-value">
+							<span class="editable" id="user-name">@UserAccount.Nom @UserAccount.Prenom</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name">Email</div>
+						<div class="profile-info-value">
+							<span class="editable" id="user-email">@UserAccount.Email</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name">CIN</div>
+						<div class="profile-info-value">
+							<span class="editable" >@UserAccount.CIN</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Profil </div>
+						<div class="profile-info-value">
+							<span class="editable" >@UserAccount.Profil</span>
+						</div>
+					</div>
+
+					<div class="profile-info-row">
+						<div class="profile-info-name"> Affiliation </div>
+						<div class="profile-info-value">
+							<span class="editable" >@UserAccount.Affiliation</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 ">
+						<div class="col-lg-12 text-right btn-up">
+							<button class="btn b-button btn-update btn-sm" onclick="editAccount()">
+								Modifier
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="vspace-12-sm"></div>
+
+					<div class="col-xs-12 col-sm-8">
+						<div class="space-4"></div>
+					</div>
+				</div>
+			</div>
+
+			@if(UserAccount.Profil == "SuperAdministrateur")
+			{
+				<div id="manage-accounts" class="tab-pane">
+					<div class="row">
+						<div class="col-lg-12 text-right">
+							<button class="btn b-button btn-sm btn-bottom" onclick="createEditUseraccount(-1)">
+								<i class="fa fa-plus fa-x"></i>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<table id="users-accounts" class="table  table-striped table-bordered" style="width:100%">
+								<thead>
+									<tr>
+										<th>Nom - Prénom</th>
+										<th>Email</th>
+										<th>CIN</th>
+										<th>Profil</th>
+										<th>Affiliation</th>
+										<th class="actions-width-3">Actions</th>
+									</tr>
+								</thead>
+								<tbody >
+									@if(@Model != null && @Model.Count > 0)
+									{
+										@foreach (var UserAccountItem in @Model)
+										{
+											<tr class="row-color" id="row_@UserAccountItem.Id">
+												<td>@UserAccountItem.Nom @UserAccountItem.Prenom </td>
+												<td>@UserAccountItem.Email</td>
+												<td>@UserAccountItem.CIN</td>
+												<td>@UserAccountItem.Profil</td>
+												<td>@UserAccountItem.Affiliation</td>
+												<td class="text-right">
+													<a href="#" onclick="changePassword(@UserAccountItem.Id)">
+														<i class="fa  fa-key fa-2x b-icon" title="Changer le Mot de Passe"></i>
+													</a>
+													<a href="#" onclick="createEditUseraccount(@UserAccountItem.Id)">
+														<i class="fa fa-edit fa-2x b-icon" title="Modifier"></i>
+													</a>
+													<a href="#" onclick="confirmDeleteaccount(@UserAccountItem.Id)">
+														<i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+													</a>
+												</td>
+											</tr>
+										}
+									}
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			}
+			
+			<div id="edit-password" class="tab-pane">
+				<div class="row">
+					<div class="col-lg-12 password-container">
+						<form id="edit-password-form">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="col-md-2" for="">Nouveau mot de passe</label>
+                                    <div class="col-md-4 ">
+                                        <input type="password" class="form-control" asp-for="@PasswordModel.NewPassword">
+										<span class="text-danger" asp-validation-for="@PasswordModel.NewPassword"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label class="col-md-2" for="">Confirmation mot de passe</label>
+                                    <div class="col-md-4 ">
+                                        <input type="password" class="form-control" asp-for="@PasswordModel.ConfirmNewPassword">
+										<span class="text-danger" asp-validation-for="@PasswordModel.ConfirmNewPassword"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="col-lg-4 col-lg-offset-5">
+                                        <button class="btn btn-sm b-button" id="submit">Changer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- #User Account -->
+<div class="modal fade bd-example-modal-lg" id="user-register-modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title text-primary" id="user-register-title"></h4>
+			</div>
+			<div class="modal-body" id="user-register-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- #End -->
+<partial name="~/Views/Auth/Delete.cshtml">
+<!-- #update Account -->
+<div class="modal fade" id="user-update-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title text-primary"> Modifier Vos Infos</h4>
+			</div>
+			<div class="modal-body" id="user-update-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- #End -->
+
+<!-- Change Password-->
+<div class="modal fade" id="update-password-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title text-primary"> Changer Le Mot de Passe</h4>
+			</div>
+			<div class="modal-body" id="update-password-body">
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- -->
+<!-- info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+@section Scripts{
+	<!-- DataTables JavaScript -->
+	<script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+	<script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+	@* custom datatable properties *@
+	<script src="~/js/manageAccount.js"></script>
+}

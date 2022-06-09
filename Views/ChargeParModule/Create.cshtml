@@ -1,0 +1,153 @@
+@model  ChargeParModule
+@{
+    var ListDepartement = ViewBag.ListDepartement;
+    var ListFilieres = ViewBag.ListFilieres;
+    var ListNiveaux = ViewBag.ListNiveaux;
+    var Course = ViewBag.Course;
+    var ModelId =  ViewBag.Id;
+}
+
+@if(@Model != null)
+{
+    
+    <form id="anneeuniv-enseignement-form">
+        <input type="hidden" asp-for="Id" value="@ModelId">
+        <input type="hidden" asp-for="IdAUEnseignant">
+        <input type="hidden" name="codeAnneeUniv" id="codeAnneeuniv">
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Filiére
+                    </label>
+                    <select class="form-control" asp-for="IdFiliere">
+                        <option value="none"> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </option>
+                        @foreach (var FiliereItem in @ListFilieres)
+                        {
+                            <option value="@FiliereItem.Id">@FiliereItem.IntituleFr</option>                        
+                        }
+                    </select>
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">
+                        Niveau
+                    </label>
+                    <select class="form-control" asp-for="IdNiveau">
+                        @if(ModelId > 0)
+                        {
+                            @foreach (var NiveauItem in @ListNiveaux)
+                            {
+                                <option value="@NiveauItem.Id">@NiveauItem.IntituleAbrg</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Période
+                    </label>
+                    <select class="form-control" asp-for="Periode">
+                        <option value="Semestre">Semestre</option>
+                        <option value="Trimestre">Trimestre</option>
+                        <option value="Quarter">Quarter</option>
+                        <option value="Annee">Annee</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="">
+                        Numéro de la période
+                    </label>
+                    <select class="form-control" asp-for="NumPeriodeDansAnnee">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label for="">
+                        Module
+                    </label>
+                    <select class="form-control" asp-for="IdModule">
+                        @if(ModelId > 0)
+                        {
+                            <option value="@Course.IdModule">@Course.IntituleFr</option>
+                        }
+                    </select>
+                    <span asp-validation-for="IdModule" class="text-danger"></span>      
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="">Type de Calcul</label>
+                    <select class="form-control" asp-for="TypeCalcul">
+                        <Option value="CalculEffectif">CalculEffectif</Option>
+                        <Option value="CalculGlobal">CalculGlobal</Option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">Nauture de l'enseignement</label>
+                    <select class="form-control" asp-for="NatureEnseignement">
+                        <Option value="Cours">Cours</Option>,
+                        <Option value="CI">CI</Option>
+                        <Option value="TD">TD</Option>
+                        <Option value="TP">TP</Option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label for="">
+                        Nombre de Semaines
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="NbSemainesPeriode" data-val-number=" Ce Champ est de type réel.">
+                    <span asp-validation-for="NbSemainesPeriode" class="text-danger"></span>
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="">
+                        Volume Par Groupe
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="VolumeHebdoParGroupe" data-val-number=" Ce Champ est de type réel.">
+                    <span asp-validation-for="VolumeHebdoParGroupe" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">
+                        Nombre De Groupe
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="NbGroupes" data-val-number=" Ce Champ est de type entier.">
+                    <span asp-validation-for="NbGroupes" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer btn-full-right">
+            <button type="reset" class="btn b-button">Annuler</button>
+            <button type="button" class="btn b-button" id="anneeuniv-enseignement-submit">
+                @if(@ModelId > 0){<span>Modifier</span>}else{<span>Enregistrer</span>}
+            </button>
+        </div>
+    </form>
+}

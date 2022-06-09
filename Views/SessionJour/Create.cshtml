@@ -1,0 +1,28 @@
+﻿@model SessionJour
+<form id="SessionJour-form">
+    <input type="hidden" name="OldCode" value="@Model.Id">
+    @*<input type="hidden" asp-for="Code">*@
+    <input type="hidden" class="form-control" asp-for="IdSession">
+    <span class="text-danger" asp-validation-for="IdSession"></span>
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <label for="">
+                    Jour
+                    <span class="required-field">*</span>
+                </label>
+                <input type="date" class="form-control" asp-for="Jour">
+                <span class="text-danger" asp-validation-for="Jour"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="button" class="btn b-button" id="submitJ">
+
+            <span> Enregistrer </span>
+
+        </button>
+    </div>
+</form>

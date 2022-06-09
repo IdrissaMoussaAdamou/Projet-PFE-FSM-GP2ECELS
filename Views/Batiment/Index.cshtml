@@ -1,0 +1,110 @@
+﻿@model List<Batiment>
+@{
+    ViewData["Title"] = "List Des Batiments";
+    ViewData["AppName"] = "FSM - GDE";
+}
+@section Styles{
+
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+}
+<div class="row">
+    <div class="col-lg-12">
+        <h3 class="page-header page-header-resize">Liste Des Batiments</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 text-right">
+        <button class="btn b-button btn-sm btn-bottom" onclick=" CreateEditBatiment('')">
+            <i class="fa fa-plus fa-x"></i>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table id="Batiment-datable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Nom</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Batiment-table-body">
+                        @foreach (var @BatimentItem in @Model)
+                        {
+                            <tr class="row-color" id="row_ @BatimentItem.Code">
+                                <td> @BatimentItem.Code</td>
+                                <td> @BatimentItem.Nom</td>
+                                <td class="text-right">
+                                    <a href="#" onclick="ShowBatiment('@BatimentItem.Code')">
+                                        <i class="fa fa-eye b-icon fa-2x " title="Consulter"></i>
+                                    </a>
+                                    @*<a href="#" onclick="CreateEditBatiment(' @BatimentItem.Code')">
+                                            <i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+                                        </a>*@
+                                    <a href="#" onclick="ConfirmDelete('@BatimentItem.Code')">
+                                        <i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- create Salle -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="Batiment-create" tabindex="-1" role="dialog" aria-labelledby="create-Batiment" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-Batiment">Ajouter Un Batiment</h4>
+            </div>
+            <div class="modal-body" id="create-edit-Batiment-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ends -->
+<!-- delete Salle -->
+<partial name="~/views/batiment/delete.cshtml">
+<!-- Ends -->
+<!--Show Module -->
+<div class="modal fade" id="show-Batiment" tabindex="-1" role="dialog"
+     aria-labelledby="show" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title text-primary" id="show">
+                    Informations Batiment
+                </h4>
+            </div>
+            <div class="modal-body" id="Batiment-info">
+
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="~/Views/Shared/_Information.cshtml">
+    <!--End -->
+    @section Scripts{
+        <!-- DataTables JavaScript -->
+        <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+        <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+            <script src="~/js/Batiment.js"></script>
+    }

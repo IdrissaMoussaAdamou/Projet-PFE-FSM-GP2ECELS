@@ -1,0 +1,186 @@
+@model List<TypeEncadrement>
+@{
+	ViewData["title"] = "Paramètres des Charges D'Enseignement";
+	Layout = "_Layout2";
+	ViewData["Link"] = "";
+	var ListTypeChargeDiverse = ViewBag.ListTypeChargeDiverse; 
+}
+@section Styles{
+	<link rel="stylesheet" href="~/css/showFiliere.css"> 
+	<link rel="stylesheet" href="~/css/chargeEnseignement.css"> 
+}
+<div class="row container-row">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3 class="page-header page-header-resize">Paramètres</h3>
+		</div>
+	</div>
+
+	<div class="row tabbable-top" style="margin-top: 0px;">
+		<div class="col-lg-12" style="margin-top: 50px;">
+			<div class="tabbable">
+				<ul class="nav nav-tabs padding-16">
+					<li class="active">
+						<a data-toggle="tab" href="#edit-basic">
+							Types D'Encadrements
+						</a>
+					</li>
+
+					<li>
+						<a data-toggle="tab" href="#edit-password">
+							Types Autres Charges
+						</a>
+					</li>
+				</ul>
+
+				<div class="tab-content profile-edit-tab-content" style="margin-bottom: 20px;">
+					<div id="edit-basic" class="tab-pane in active">
+						<div id="edit-settings" class="tab-pane">
+							<div class="row">
+								<div class="col-lg-12 text-right">
+									<button class="btn b-button btn-sm btn-bottom" onclick="CreateEditTypeEncadrement(-1)">
+										<i class="fa fa-plus fa-x"></i>
+									</button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<table id="type-encadrement" class="table  info-table table-striped table-bordered"style="width:100%">
+										<thead>
+											<tr>
+												<th>Libellé</th>
+												<th>Cycle</th>
+												<th>Nature De Charge</th>
+												<th>Volume</th>
+												<th>Periode</th>
+												<th>NbSemaine</th>
+												<th style="width:8%;">Actions</th>
+											</tr>
+										</thead>
+										<tbody id="encadrement-table-body">
+											@foreach (var TyEncadrementItem in @Model)
+											{
+
+												var PeriodeAnnee = string.Concat(TyEncadrementItem.Periode, TyEncadrementItem.NumPeriodeDansAnnee);
+												<tr class="row-color" id="row_@TyEncadrementItem.Id">
+													<td>@TyEncadrementItem.Libelle</td>
+													<td>@TyEncadrementItem.Cycle</td>
+													<td>@TyEncadrementItem.NatureCharge</td>
+													<td>@TyEncadrementItem.VolumeHebdoCharge</td>
+													<td>@PeriodeAnnee</td>
+													<td>@TyEncadrementItem.NbSemainesPeriode</td>
+													<td class="text-center">
+														<a href="#" onclick="CreateEditTypeEncadrement(@TyEncadrementItem.Id)">
+															<i class="fa fa-edit fa-2x" style="color: #337ab7;"title="Modifier"></i>
+														</a>
+														<a href="#" onclick="ConfirmDeleteTypeEncadrement(@TyEncadrementItem.Id)">
+															<i class="fa fa-trash-o b-icon fa-2x" title="Supprimer"></i>
+														</a>
+													</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- create TypeEncadrement -->
+							<div class="modal fade bd-example-modal-lg" id="TypeEncadrementModal">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    						 <h4 class="modal-title text-primary" id="type-title">Ajouter Un TypeEncadrement</h4>
+										</div>
+										<div class="modal-body" id="TypeEncadrementModalBody">
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End -->
+
+							<!-- Delete Type Encadrement-->
+							<partial name="~/Views/TypeEncadrement/Delete.cshtml">
+							<!-- End -->
+
+						</div>
+
+						<div class="row">
+							<div class="vspace-12-sm"></div>
+
+							<div class="col-xs-12 col-sm-8">
+								<div class="space-4"></div>
+							</div>
+						</div>
+					</div>
+
+					<div id="edit-password" class="tab-pane">
+						<div class="row">
+							<div class="col-lg-12 col-lg-offset-10" style="padding-left: 22px;">
+								<button class="btn b-button btn-sm btn-bottom" onclick="CreateEditTypeChargeDiverse(-1)">
+									<i class="fa fa-plus fa-x"></i>
+								</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12 col-lg-offset-1">
+								<table id="autre-charge" class="table info-table table-striped table-bordered" style="width:80%">
+									<thead>
+										<tr>
+											<th style="width:92%;">Libellé</th>
+											<th style="width:8%;">Actions</th>
+										</tr>
+									</thead>
+									<tbody id="typeChargeDiverse-tbody">
+										@foreach (var TypeChargeDiverseItem in @ListTypeChargeDiverse)
+										{
+											<tr class="row-color" id="row-@TypeChargeDiverseItem.Id">
+												<td>@TypeChargeDiverseItem.Libelle</td>
+												<td class="text-center">
+													<a href="#" onclick="CreateEditTypeChargeDiverse(@TypeChargeDiverseItem.Id)">
+														<i class="fa fa-edit fa-2x" style="color: #337ab7;" title="Modifier"></i>
+													</a>
+													<a href="#" onclick="ConfirmDeleteTypeChargeDiverse(@TypeChargeDiverseItem.Id)">
+														<i class="fa fa-trash-o b-icon fa-2x"  title="Supprimer"></i>
+													</a>
+												</td>
+											</tr>	
+										}
+									</tbody>
+								</table>
+							</div>
+							<!-- create TypeChargeDiverse -->
+							<div class="modal fade" id="TypeChargeDiverseModal">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header" id="TypeChargeDiverseModalHeader">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    						 <h4 class="modal-title text-primary" id="typecharge-title"></h4>
+										</div>
+										<div class="modal-body" id="TypeChargeDiverseModalBody">
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--Ends -->
+
+							<!-- Delete TypeChargeDiverse -->
+							<partial name="~/Views/TypeEncadrement/DeleteTypeChargeDiverse.cshtml">
+							<!--Ends -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Report Info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+<!--Ends -->
+
+@section Scripts{
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+        @* custom datatable properties *@
+	<script src="~/js/chargeEnseignement.js"> </script>
+}

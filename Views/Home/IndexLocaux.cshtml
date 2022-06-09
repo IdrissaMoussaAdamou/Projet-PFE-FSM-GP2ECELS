@@ -1,0 +1,51 @@
+﻿@{ ViewData["Title"] = "Home Page";
+                ViewData["AppName"] = "FSM - GL"; }
+
+<div class="menu_widgets">
+    <div class="row">
+        <div class="col-lg-3 col-lg-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <div class="col-xs-3">
+                            <i class="fa fa-users fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<h3>Charges D'Enseignement</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Locaux" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-left">Gestion des Salles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row text-center">
+                        <div class="col-xs-3">
+                            <i class="fa fa-university fa-5x" style="font-size: 7em;"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            @*<h3>Charges D'Enseignement</h3>*@
+                            <i class="fa fa-hand-o-up fa-5x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Batiment" asp-action="Index">
+                    <div class="panel-footer">
+                        <span class="pull-left">Gestion des Batiment</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

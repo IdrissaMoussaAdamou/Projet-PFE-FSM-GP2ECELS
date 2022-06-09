@@ -1,0 +1,202 @@
+﻿@model SessionJourVM
+@{
+    ViewData["ids"] = ViewBag.ids;
+    ViewData["niveau"] = ViewBag.niveau;
+    var listsection = ViewBag.listsection;
+    ViewData["Title"] = "Calendrier";
+    ViewData["AppName"] = "FSM - GDS";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+@section Styles{
+
+    <link rel="stylesheet" href="~/template/vendor/datatables-plugins/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="~/template/vendor/datatables-responsive/dataTables.responsive.css">
+    <link rel="stylesheet" href="~/css/showFiliere.css">
+    <link rel="stylesheet" href="~/css/chargeEnseignement.css">
+    <style>
+        .scroll{
+            overflow-x:auto;
+            overflow-y:scroll;
+        }
+    </style>
+
+}
+<input type="hidden" id="idsC" value="@ViewData["ids"]" />
+<input type="hidden" id="Niveauimp" value="@ViewData["niveau"]" />
+<div class="row row-container container-margin2">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Planification des Calendriers</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 30px; ">
+    <div class="col-lg-12 filter-bar">
+        <form class="form-horizontal filter-bar-form">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group row" style="margin-bottom: 0px;">
+                        <label for="" class="col-md-1 col-lg-offset-3" style="padding-top: 8px;">Niveau:</label>
+                        <div class="col-md-2">
+                            <select class="form-control" id="FieldNameNiveau">
+                                <option value="Niveau 1">Première année License</option>
+                                <option value="Niveau 2">Deuxième année License</option>
+                                <option value="Niveau 3">Troisième année License</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="button" class="btn b-button btn-sm " id="searchNiveau">
+                                Chercher | <i class="fa fa-search fa-x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="scroll">
+                    <table id="Calendrier" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr class="Calenth">
+                                <th></th>
+                                @foreach (var @JourItem in @Model.Jours)
+                                {
+
+                                    <th colspan="2" style="text-align:center">@JourItem</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="Calendrier-table-body">
+                            @foreach (var @sectionitem in @Model.Cells)
+                            {
+                                <tr>
+                                    <th class="Calenth" style="vertical-align:middle">@sectionitem[0].SectionNiveau</th>
+                                    @foreach (var @CellItem in @sectionitem)
+                                    {
+                                        if (@CellItem.Id <= 0)
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId ****1" class="Calentd">
+                                                <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionExamen(@CellItem.SessionId ,@CellItem.JourId,@CellItem.SectionId,1)">
+                                                    <i class="fa fa-plus fa-x"></i>
+                                                </button>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId" class="Calentd">
+                                                <div>
+                                                    <p>
+                                                        @CellItem.Intitule
+                                                    </p>
+                                                    <p>
+                                                        @CellItem.HD<span>-</span>@CellItem.HF
+                                                    </p>
+                                                    <a href="#" onclick="ConfirmDelete(@CellItem.SessionId ,@CellItem.JourId,@CellItem.SectionId,1)" class="pull-right">
+                                                        <i class="fa fa-trash-o b-icon fa-lg" title="Supprimer" style="color:red"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+
+                                        }
+
+                                        if (@CellItem.Id2 <= 0)
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId ****1" class="Calentd">
+                                                <button class="btn b-button btn-sm btn-bottom" onclick="CreateEditSessionExamen(@CellItem.SessionId ,@CellItem.JourId,@CellItem.SectionId,2)">
+                                                    <i class="fa fa-plus fa-x"></i>
+                                                </button>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td id="@CellItem.JourId-@CellItem.SectionId" class="Calentd">
+                                                <div>
+                                                    <p>
+                                                        @CellItem.Intitule2
+                                                    </p>
+                                                    <p>
+                                                        @CellItem.HD2<span>-</span>@CellItem.HF2
+                                                    </p>
+                                                    <a href="#" onclick="ConfirmDelete(@CellItem.SessionId ,@CellItem.JourId,@CellItem.SectionId,2)" class="pull-right">
+                                                        <i class="fa fa-trash-o b-icon fa-lg" title="Supprimer" style="color:red"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+
+                                        }
+                                    }
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer pull-left">
+                    <button type="reset" class="btn b-button">
+                        <i class="fa fa-clipboard fa-x"></i>
+                        Vérifier Examen
+                    </button>           
+                    <button type="button" class="btn b-button" id="PDF">
+                        <i class="fa fa-file-excel-o fa-x"></i>
+                        <span>Importer Excel</span>
+
+                    </button>
+                    <button type="button" class="btn b-button" id="PDF2">
+                        <i class="fa fa-print fa-x"></i>
+                        <span>Imprimer</span>
+
+                    </button>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<!-- create SessionExamen -->
+<!-- Modal -->
+<div class="modal fade bd-exemple-modal-lg" id="SessionExamen-create" tabindex="-1" role="dialog" aria-labelledby="create-SessionExamen" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title text-primary" id="create-SessionExamen">Ajouter Une SessionExamen</h4>
+            </div>
+            <div class="modal-body" id="create-edit-SessionExamen-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<partial name="~/Views/Shared/_Information.cshtml">
+    <!--End -->
+    @section Scripts{
+    <script>
+        var height = screen.height - 300;
+        var width = screen.width - 600;
+        var screenHeight = height + "px";
+        var screenWidth = width + "px";
+
+        //alert(screenHeight);
+        alert(screenWidth);
+        $(".scroll").css('height', screenHeight);
+        $(".scroll").css('width', screenwidth);
+    </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+        <!-- DataTables JavaScript -->
+        <script src="~/template/vendor/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/template/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+        <script src="~/template/vendor/datatables-responsive/dataTables.responsive.js"></script>
+        <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+            <script src="~/js/Calendrier.js"></script>
+    }

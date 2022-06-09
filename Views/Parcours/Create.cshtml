@@ -1,0 +1,91 @@
+
+@model Parcours
+<form id="parcours-form">
+    <input type="hidden" asp-for="IdFiliere" value="@Model.IdFiliere">
+    <input type="hidden" asp-for="Id">    
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="Code">
+                    Code
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="Code" placeholder="Code ...">
+                <span class="text-danger" asp-validation-for="Code"></span>
+            </div>
+    
+            <div class="col-md-6">
+                <label for=" ">
+                    Intitulé Français
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="IntituleFr">
+                <span class="text-danger" asp-validation-for="IntituleFr"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Intitulé Arabe
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="IntituleAr">
+                <span class="text-danger" asp-validation-for="IntituleAr"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Abréviation
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="IntituleAbrg">
+                <span class="text-danger" asp-validation-for="IntituleAbrg"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <label for="">
+                    Période De Début Du Parcours
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="PeriodeDebut">
+                <span class="text-danger" asp-validation-for="PeriodeDebut"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="">
+                    Période De Début De Fin Parcours
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="PeriodeFin">
+                <span class="text-danger" asp-validation-for="PeriodeFin"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <label for="">
+                    Période D'Habilitation
+                    <span class="required-field">*</span>
+                </label>
+                <input type="text" class="form-control" asp-for="PeriodeHabilitation">
+                <span class="text-danger" asp-validation-for="PeriodeHabilitation"></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-footer btn-full-right">
+        <button type="reset" class="btn b-button">Annuler</button>
+        <button type="submit" class="btn b-button" id="submit-parcours">
+            @if(string.IsNullOrEmpty(@Model.Code)){ <span> Enregistrer </span> } else{ <span> Modifier </span> }
+        </button>
+    </div>
+</form>

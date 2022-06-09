@@ -1,0 +1,114 @@
+@model  ChargeDiverse
+@{
+    var ListTypeChrgDivers = ViewBag.ListTypeChrgDivers;
+}
+@if(@Model != null)
+{
+    <form id="charge-divers-form">
+        <input type="hidden" asp-for="Id">
+        <input type="hidden" asp-for="IdAUEnseignant">
+        <input type="hidden" name="AnneeUniv" id="AnneeUniv">
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Type Charge Diverse
+                    </label>
+                    <select class="form-control" asp-for="IdTypeChargeDiverse">
+                        @foreach (var TypeChrgDiversItem in @ListTypeChrgDivers)
+                        {
+                            <option value="@TypeChrgDiversItem.Id">@TypeChrgDiversItem.Libelle</option>                        
+                        }
+                    </select>
+                    <span asp-validation-for="IdTypeChargeDiverse" class="text-danger"></span>                
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">
+                        Unité Volume
+                    </label>
+                    <select class="form-control" asp-for="UniteVolume">
+                    <option value="Hebdomadaire">Hebdomadaire</option>
+                    <option value="Periode">Période</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="">
+                        Période
+                    </label>
+                    <select class="form-control" asp-for="Periode">
+                        <option value="Semestre">Semestre</option>
+                        <option value="Trimestre">Trimestre</option>
+                        <option value="Quater">Quater</option>
+                        <option value="Annuel">Annuel</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="">
+                        Numéro de la période
+                    </label>
+                    <select class="form-control" asp-for="NumPeriodeDansAnnee">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label for="">Nature De La Charge</label>
+                    <select class="form-control" asp-for="NatureCharge">
+                        <Option value="Cours">Cours</Option>
+                        <Option value="TD">TD</Option>
+                        <Option value="TP">TP</Option>
+                    </select>
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="">
+                        Volume De La Charge
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="Volume">
+                    <span class="text-danger" asp-validation-for="Volume"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">
+                        Nombre de Semaine
+                        <span class="required-field">*</span>
+                    </label>
+                    <input type="text" class="form-control" asp-for="NbSemainesPeriode">
+                    <span class="text-danger" asp-validation-for="NbSemainesPeriode"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <label for="">Observation</label>
+                    <textarea asp-for="Observations" cols="113" rows="3" style="resize: none;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer btn-full-right">
+            <button type="reset" class="btn b-button">Annuler</button>
+            <button type="button" class="btn b-button" id="charge-divers-submit">
+                @if(@Model.Id > 0){<span>Modifier</span>}else{<span>Enregistrer</span>}
+            </button>
+        </div>
+    </form>
+}

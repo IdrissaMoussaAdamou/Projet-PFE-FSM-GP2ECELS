@@ -1,0 +1,279 @@
+@model List<AnneeUniversitaireEnseignant>
+@{
+    ViewData["Title"] = "Charge Année Universitaire";
+    Layout = "_Layout2";
+    ViewData["Link"] = "";
+    var Annee = ViewBag.Annee;
+    var ListDepartement = ViewBag.ListDepartement;
+}
+@section Styles{
+   <link rel="stylesheet" href="~/css/chargeEnseignement.css"> 
+}
+<div class="text-right" style="padding-top: 3px;">
+    <h5>
+        <a asp-controller="ChargeEnseignement" asp-action="Details" asp-route-Code="@Annee">Détails |</a>
+        <a asp-controller="Home" asp-action="Index"> Home</a>
+    </h5>
+</div>
+<div class="row row-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header page-header-resize">Année Universitaire : <strong>@Annee</strong></h3>
+             <h5>
+                <a asp-controller="ChargeEnseignement" asp-action="Index">Liste des charges par année ></a>
+                <a href="#"> AU : @Annee</a>
+            </h5>
+        </div> 
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12 filter-bar">
+            <form class="form-horizontal filter-bar-form">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="form-group row"style="margin-bottom: 0px;">
+                            <label for="" class="col-md-1" style="padding-top: 8px;">Filtrer Par:</label>
+                            <div class="col-md-2">
+                                <select class="form-control" id="FieldName">
+                                    <option value="Departement">Departement</option>
+                                    <option value="Grade">Grade</option>
+                                    <option value="Statut">Statut</option>
+                                    <option value="Nom">Nom</option>
+                                    <option value="CIN">CIN</option>
+                                    <option value="Tous">Tous</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <select class="form-control" id="FieldValue">
+                                    @foreach (var DeptItem in @ListDepartement)
+                                    {
+                                        <option value="@DeptItem">@DeptItem</option>
+                                    }
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                 <button type="button" class="btn b-button btn-sm " id="search">Chercher | <i class="fa fa-search fa-x"></i>
+                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 info-content">
+           <div class="row">
+             
+                <div class="col-lg-12" style="padding-left: 0px;">
+
+                    <div class="col-md-3 charges-actions">
+                        <span>Les Charges :</span>
+                        <button class=" btn b-button btn-sm">
+                            <i class="fa fa-print fa-x" title="imprimer"></i>
+                        </button>
+
+                        <button class="btn b-button btn-sm btn-bottom">
+                            <i class="fa fa-download fa-x" title="Exporter"></i>
+                        </button>
+                    </div>
+
+                     <div class="col-md-6 text-center charges-actions">
+                        <span> WorkFlow :</span>
+                        <button class=" btn r-button btn-sm" onclick="lockcharges()" title="Vérrouiller">
+                            <i class="fa fa-lock fa-x"></i>
+                        </button>
+
+                        <button class="btn b-button btn-sm btn-bottom" onclick="unlockcharges()" title="Dévérouiller">
+                            <i class="fa fa-unlock fa-x" ></i>
+                        </button>
+                        <button class=" btn cancel btn-sm" onclick="validateCharges()" title="Valider">
+                            <i class="fa fa-legal fa-x" ></i>
+                        </button>
+                        <button class=" btn b-button btn-sm" onclick="unvalidateCharges()" title="Invalider">
+                            <i class="fa fa-legal fa-x"></i>
+                        </button>
+                    </div>
+
+                    <div class="col-md-3  teachers-actions text-right" style="padding-right: 0px;">
+                        <span>Les Enseignants :</span>
+                        <button class=" btn b-button btn-sm" data-toggle="modal" data-target="#import-teacher">
+                            <i class="fa fa-upload fa-x" title="Importer"></i>
+                        </button>
+                        <button class="btn b-button btn-sm btn-bottom" onclick="addTeacher()">
+                            <i class="fa fa-plus fa-x" title="Ajouter"></i>
+                        </button>
+                    </div>
+            </div> 
+           
+           </div>
+            <table  class="table info-table table-striped table-bordered hide-border" style="width:100%" id="AnneeUniv-Enseignant">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="no-style" title="cocher tous">
+                            <input type="checkbox" id="check-All">
+                        </th>
+                        <th rowspan="2">Etat</th>
+                        <th rowspan="2">CIN</th>
+                        <th rowspan="2">Nom</th>
+                        <th rowspan="2">Prénom</th>
+                        <th rowspan="2">Grade</th>
+                        <th rowspan="2">Statut</th>
+                        <th rowspan="2">Déptartement</th>
+                        <th colspan="3">Charge Annuel (CA)</th>
+                        <th colspan="3">Heures Supplementaires (HS)</th>
+                        <th rowspan="2" style="width: 8%;">Actions</th>
+                    </tr>
+                    <tr>
+                        <th>CA-Cours</th>
+                        <th>CA-TD</th>
+                        <th>CA-TP</th>
+                        <th>HS-Cours</th>
+                        <th>HS-TD</th>
+                        <th>HS-TP</th>
+                    </tr>
+                </thead>
+                <tbody id="year-teachers">
+                   @if(@Model != null)
+                   {
+                        @foreach (var TeacherItem in @Model)
+                        {
+                            
+                            <tr class="row-color rows" id="row_@TeacherItem.Id">
+                                <td class="border-no">
+                                    <input type="checkbox" value="@TeacherItem.Id">
+                                </td>
+                                <td>
+                                    @if(@TeacherItem.ValidationChargeAdministration == "Validee")
+                                    {
+                                        <i class="fa fa-check-circle fa-2x g-check"></i>
+                                    }
+                                    else if(@TeacherItem.ValidationChargeDepartement == "Validee" && @TeacherItem.ValidationChargeAdministration == "Non Validee") 
+                                    {
+                                        <i class="fa fa-check-circle fa-2x y-check"></i>
+                                    }
+                                    else if(@TeacherItem.EtatSaisie == "Verrouillee")
+                                    {
+                                        <i class="fa fa-check-circle fa-2x r-check"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-check-circle fa-2x b-icon"></i>
+                                    }
+                                </td>
+                                <td>@TeacherItem.CIN</td>
+                                <td>@TeacherItem.Nom</td> 
+                                <td>@TeacherItem.Prenom</td>
+                                <td>@TeacherItem.Grade</td>
+                                <td>@TeacherItem.Statut</td>
+                                <td>@TeacherItem.IntituleFrDepartement</td>
+                                <td>00</td>
+                                <td>00</td>
+                                <td>00</td>
+                                <td>00</td>
+                                <td>00</td>
+                                <td>00</td>
+                                <td class="text-center">
+                                    <a asp-controller="ChargeEnseignement" asp-action="Consult"  title="Consulter">
+                                        <i class="fa fa-eye b-icon fa-2x  text-success"></i>
+                                    </a>
+                                    <a href="#" onclick="confirmDeleteAUteacher(@TeacherItem.Id)">
+                                        <i class="fa fa-trash-o b-icon fa-2x"  title="supprimer"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                   }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--Import Enseignant Modal -->
+ <div class="modal fade bd-example-modal-lg" id="import-teacher">
+     <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header import-modal-header">
+                <div class="col-lg-12 import-header-form">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group row"style="margin-bottom: 0px;">
+                                    <label for="" class="col-md-2" style="padding-top: 8px;">Filtrer Par:</label>
+                                    <div class="col-md-3"style="padding-left: 0px;">
+                                        <select class="form-control" id="FieldName2">
+                                            <option value="Departement">Departement</option>
+                                            <option value="Grade">Grade</option>
+                                            <option value="Statut">Statut</option>
+                                            <option value="Nom">Nom</option>
+                                            <option value="CIN">CIN</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <select class="form-control" id="FieldValue2">
+                                            @foreach (var DeptItem in @ListDepartement)
+                                            {
+                                                <option value="@DeptItem">@DeptItem</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn b-button btn-sm " id="search2">Chercher | <i class="fa fa-search fa-x"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-body import-body" id="body-modal">
+               <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="col-md-4 col-lg-offset-1" for=""><strong>Nom & Prénom</strong> </label>
+                        <label class="col-md-3" for=""><strong>CIN</strong> </label>
+                        <label class="col-md-4 " for=""><strong>Département </strong></label>
+                    </div>
+                    <div class="col-md-12 empty-tab"></div>
+                </div>
+            </div>
+        </div>
+     </div>
+ </div>
+<!--End -->
+
+<!-- #Add Enseignant -->
+<div class="modal fade bd-exemple-modal-lg" id="create-teacher">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                 <h4 class="modal-title text-primary" id="type-title">Ajouter Un Enseignant Pour L'année En Cours</h4>
+            </div>
+            <div class="modal-body" id="create-teacher-body">
+                    
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- #Add End -->
+
+<!-- Report Info -->
+<partial name="~/Views/Shared/_Information.cshtml">
+<!--Ends -->
+
+<!-- #Report Error -->
+<partial name="~/Views/AnneeUniversitaireEnseignant/Delete.cshtml">
+<!-- #End -->
+<input type="hidden" id="CodeAnneeUniv" value="@Annee">
+@section Scripts{
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml">
+        @* custom datatable properties *@
+	<script src="~/js/chargeEnseignement.js"> </script>
+}
