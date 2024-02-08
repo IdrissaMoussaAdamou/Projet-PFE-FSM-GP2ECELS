@@ -1,5 +1,5 @@
 # Projet-PFE-FSM-GP2ECELS
-Développement d’une plateforme de gestion des ressources administratif de la Faculté des Sciences de Monastir (« FSM-GP2ECELS »)
+Développement d’une plateforme de gestion des ressources administratif d'une Faculté d'enseignement supérieur (« FSM-GP2ECELS »)
 
 Ce projet intitulé « FSM-GP2ECE » est une plateforme de gestion de ressources d’un sous-système d’information administratif en particulier celui de la Faculté des Sciences de Monastir. A l’issue de notre travail la plateforme offre des services simples et pratiques tels que:
 
